@@ -12,7 +12,7 @@ function App() {
   return (
     <>
       <AuthContext value={{ token, setToken }}>
-        <Header />
+        {/* <Header /> */}
         <Outlet></Outlet>
       </AuthContext>
     </>
