@@ -1,20 +1,20 @@
 import "./App.css";
 
-import { useState } from "react";
+import { useContext, useState } from "react";
 
 import { Header } from "./header/header.jsx";
 
-import { AuthContext } from "./Context";
+import { userContext } from "./Context";
 import { Outlet } from "react-router";
 
 function App() {
-  const [token, setToken] = useState(localStorage.getItem("access_token"));
+  const [token, setToken] = useState(useContext(userContext));
   return (
     <>
-      <AuthContext value={{ token, setToken }}>
+      {/* <userContext value={{ token, setToken }}> */}
         {/* <Header /> */}
         <Outlet></Outlet>
-      </AuthContext>
+      {/* </userContext> */}
     </>
   );
 }

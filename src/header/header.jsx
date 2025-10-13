@@ -1,10 +1,10 @@
 import "./header.css";
 import { redirect } from "react-router";
 import { useContext } from "react";
-import { AuthContext } from "../Context";
+import { userContext } from "../Context";
 
 export const Header = () => {
-  const authContext = useContext(AuthContext);
+  const authContext = useContext(userContext);
 
   function logout() {
     authContext.setToken("");

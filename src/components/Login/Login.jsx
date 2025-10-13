@@ -1,14 +1,14 @@
 import "./Login.css";
 import logoImage from "/logo-landscape.png";
-import { AuthContext } from "../../Context";
+import { userContext } from "../../Context";
 import { ErrorBoundary } from "react-error-boundary";
 import { useContext, useState } from "react";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 
 function Login(props) {
   const [username, setUsername] = useState("");
   const [authResults, setAuthResults] = useState("");
-  const auth = useContext(AuthContext);
+  const auth = useContext(userContext);
   let navigate = useNavigate();
 
   function typingUsername(e) {
@@ -35,8 +35,14 @@ function Login(props) {
 
       auth.setToken(result.token);
 
-      localStorage.setItem("access_token", result.token);
-      localStorage.setItem("userId", result.userId);
+      localStorage.setItem(
+        "messaging_app_access",
+        JSON.stringify({
+          username: result.username,
+          token: result.token,
+        })
+      );
+
       navigate("/");
     } catch (e) {
       throw new Error(`login error: ${e.message}`);
@@ -51,11 +57,7 @@ function Login(props) {
       <div className="flex items-center h-full justify-center">
         <div className="bg-white p-6 rounded-md xl:col-span-1 xl:col-start-3">
           <div className="mb-8 flex flex-col gap-2.5">
-            <img
-              src={logoImage}
-              alt="login icon"
-              className="w-72 mx-auto"
-            />
+            <img src={logoImage} alt="login icon" className="w-72 mx-auto" />
             <p className="text-gray-500">
               Please enter your credientials and press login
             </p>
@@ -124,6 +126,10 @@ function Login(props) {
             <button type="submit" className="mt-5 button-solid">
               Login
             </button>
+            <p className="text-center">Or</p>{" "}
+            <Link className="text-center" to="/signup">
+              Sign up with email
+            </Link>
           </form>
         </div>
       </div>
