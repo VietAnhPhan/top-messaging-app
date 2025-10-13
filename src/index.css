@@ -7,7 +7,7 @@
     font-size: 1em;
     font-weight: 500;
     font-family: inherit;
-    background-color: var(--color-blue-700);
+    background-color: var(--color-green-600);
     cursor: pointer;
     transition: border-color 0.25s;
     color: white;
