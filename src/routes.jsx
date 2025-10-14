@@ -27,6 +27,8 @@ const router = createBrowserRouter([
       },
       {
         path: "/profile",
+        middleware: [authMiddleware],
+        loader: dataLoader,
         element: <Profile />,
       },
       {
@@ -50,7 +52,7 @@ async function authMiddleware({ context }) {
 
 function dataLoader({ context }) {
   const user = context.get(userContext);
-  console.log(user);
+
   return user;
 }
 
