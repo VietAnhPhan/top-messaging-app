@@ -1,7 +1,6 @@
 const Conversation = ({ conversation, handleSelect }) => {
   return (
     <div
-      key={conversation.id}
       className="flex justify-between p-4 hover:bg-[#EDEDED]"
       onClick={handleSelect}
     >
@@ -22,11 +21,17 @@ const Conversation = ({ conversation, handleSelect }) => {
           />
         </svg>
         <div>
-          <p className="text-2xl font-medium">{conversation.name}</p>
-          <p>{conversation.last_message}</p>
+          {conversation.messages.length > 0 && (
+            <>
+              <p className="text-2xl font-medium">
+                {conversation.messages[0].user.name}
+              </p>
+              <p>{conversation.messages[0].message}</p>
+              <p>{new Date(conversation.messages[0].createdAt).toString()}</p>
+            </>
+          )}
         </div>
       </div>
-      <p>{conversation.last_sent_at}</p>
     </div>
   );
 };
