@@ -1,8 +1,36 @@
-const Conversation = ({ conversation, handleSelect }) => {
+import { useContext } from "react";
+import { UserContext } from "../../../Context";
+
+const Conversation = ({ conversation, userIds }) => {
+  const userContext = useContext(UserContext);
+  // console.log(conversation.ChatMember);
+  const friendId = conversation.userIds.filter(
+    (id) => id !== userContext.loaderData.id
+  );
+
+  async function handleClick() {
+    const rs = await fetch(
+      `http://localhost:3000/conversations?userIds=${userIds}&friendId=${friendId[0]}`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `bearer ${userContext.loaderData.token}`,
+        },
+      }
+    );
+
+    const currentConversation = await rs.json();
+
+    userContext.handleCurrentConversation({
+      conversation: currentConversation,
+      friend: currentConversation.friend,
+    });
+  }
+
   return (
     <div
       className="flex justify-between p-4 hover:bg-[#EDEDED]"
-      onClick={handleSelect}
+      onClick={handleClick}
     >
       <div className="flex justify-between gap-x-2">
         <svg
@@ -24,7 +52,7 @@ const Conversation = ({ conversation, handleSelect }) => {
           {conversation.messages.length > 0 && (
             <>
               <p className="text-2xl font-medium">
-                {conversation.messages[0].user.name}
+                {conversation.ChatMember[0].user.name}
               </p>
               <p>{conversation.messages[0].message}</p>
               <p>{new Date(conversation.messages[0].createdAt).toString()}</p>

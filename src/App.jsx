@@ -4,16 +4,16 @@ import { useContext, useState } from "react";
 
 import { Header } from "./header/header.jsx";
 
-import { userContext } from "./Context";
+import { UserContext } from "./Context";
 import { Outlet } from "react-router";
 
 function App() {
-  const [token, setToken] = useState(useContext(userContext));
+  const [token, setToken] = useState(useContext(UserContext));
   return (
     <>
       {/* <userContext value={{ token, setToken }}> */}
-        {/* <Header /> */}
-        <Outlet></Outlet>
+      {/* <Header /> */}
+      <Outlet></Outlet>
       {/* </userContext> */}
     </>
   );

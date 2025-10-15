@@ -1,6 +1,6 @@
 import "./Login.css";
 import logoImage from "/logo-landscape.png";
-import { userContext } from "../../Context";
+// import { userContext } from "../../Context";
 import { ErrorBoundary } from "react-error-boundary";
 import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router";
@@ -8,7 +8,7 @@ import { Link, useNavigate } from "react-router";
 function Login(props) {
   const [username, setUsername] = useState("");
   const [authResults, setAuthResults] = useState("");
-  const auth = useContext(userContext);
+  // const auth = useContext(userContext);
   let navigate = useNavigate();
 
   function typingUsername(e) {
@@ -33,7 +33,7 @@ function Login(props) {
         return;
       }
 
-      auth.setToken(result.token);
+      // auth.setToken(result.token);
 
       localStorage.setItem(
         "messaging_app_access",

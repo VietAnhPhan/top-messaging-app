@@ -1,14 +1,14 @@
 import Conversation from "./Conversation";
 
-const ConversationList = ({ conversations, handleSelect }) => {
+const ConversationList = ({ conversations }) => {
   return (
     <>
       {conversations.length > 0 &&
-        conversations.map((conversation, index) => (
+        conversations.map((conversation) => (
           <Conversation
             key={conversation.id}
             conversation={conversation}
-            handleSelect={() => handleSelect(index)}
+            userIds={conversation.userIds}
           ></Conversation>
         ))}
     </>

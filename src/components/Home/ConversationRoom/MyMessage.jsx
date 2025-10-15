@@ -4,7 +4,7 @@ const MyMessage = ({ message }) => {
       <div className="flex gap-x-10">
         <span>{message.message}</span>
         <span className="text-sm flex items-end text-[#7C7C7C]">
-          {message.timestamp}
+          {new Date(message.createdAt).toString()}
         </span>
       </div>
     </div>

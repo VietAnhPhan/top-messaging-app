@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { userContext } from "../../Context";
+// import { userContext } from "../../Context";
 import { useLoaderData } from "react-router";
 import { Link } from "react-router";
 
@@ -10,7 +10,7 @@ const Profile = () => {
   const [validations, setValidations] = useState([]);
   const loaderData = useLoaderData();
 
-  const auth = useContext(userContext);
+  // const auth = useContext(userContext);
 
   // useEffect(() => {
   //   async function fetchUser() {
@@ -49,7 +49,7 @@ const Profile = () => {
       body: JSON.stringify({ name, password }),
       headers: {
         "Content-type": "application/json",
-        Authorization: `bearer ${auth.token}`,
+        Authorization: `bearer ${loaderData.token}`,
       },
     });
     if (response.ok) {

@@ -4,7 +4,7 @@ import Home from "./components/Home/Home";
 import Login from "./components/Login/Login";
 import Signup from "./components/Signup/Signup";
 import Profile from "./components/Profile/Profile";
-import { userContext } from "./Context";
+import { UserContext } from "./Context";
 
 const router = createBrowserRouter([
   {
@@ -47,17 +47,17 @@ async function authMiddleware({ context }) {
 
   if (!user) throw redirect("/login");
 
-  context.set(userContext, user);
+  context.set(UserContext, user);
 }
 
 function dataLoader({ context }) {
-  const user = context.get(userContext);
+  const user = context.get(UserContext);
 
   return user;
 }
 
 async function homeLoader({ context }) {
-  const user = context.get(userContext);
+  const user = context.get(UserContext);
   const conversations = await getConversations(user.id);
   user.conversations = conversations;
   return user;
@@ -102,6 +102,25 @@ async function getConversations(userId) {
     );
 
     const conversations = await rs.json();
+
+    const friendId = conversations[0].userIds.filter((id) => id !== userId);
+
+    // console.log(friendId[0]);
+
+    const currentConversationRes = await fetch(
+      `http://localhost:3000/conversations?userIds=${conversations[0].userIds}&friendId=${friendId[0]}`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `bearer ${access.token}`,
+        },
+      }
+    );
+    const currentConversation = await currentConversationRes.json();
+
+    conversations.currentConversation = currentConversation;
+
+    // console.log(currentConversation);
 
     return conversations;
   } catch (err) {
