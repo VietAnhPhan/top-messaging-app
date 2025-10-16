@@ -9,25 +9,18 @@ import { UserContext } from "./Context";
 const router = createBrowserRouter([
   {
     path: "",
+    middleware: [authMiddleware],
+    loader: dataLoader,
     element: <App></App>,
     children: [
       {
         path: "/",
-        middleware: [authMiddleware],
         loader: homeLoader,
         element: <Home sitename="ReactJS template" />,
       },
-      {
-        path: "/login",
-        element: <Login sitename="ReactJS template" />,
-      },
-      {
-        path: "/signup",
-        element: <Signup sitename="ReactJS template" />,
-      },
+
       {
         path: "/profile",
-        middleware: [authMiddleware],
         loader: dataLoader,
         element: <Profile />,
       },
@@ -39,11 +32,18 @@ const router = createBrowserRouter([
       },
     ],
   },
+  {
+    path: "/login",
+    element: <Login sitename="ReactJS template" />,
+  },
+  {
+    path: "/signup",
+    element: <Signup sitename="ReactJS template" />,
+  },
 ]);
 
 async function authMiddleware({ context }) {
   const user = await getUser();
-  // const user = await response.json();
 
   if (!user) throw redirect("/login");
 
@@ -59,14 +59,17 @@ function dataLoader({ context }) {
 async function homeLoader({ context }) {
   const user = context.get(UserContext);
   const conversations = await getConversations(user.id);
+  const currentConversation = await getCurrentConversation(
+    conversations[0].userIds
+  );
   user.conversations = conversations;
+  user.currentConversation = currentConversation;
+
   return user;
 }
 
 async function getUser() {
   try {
-    // const token = localStorage.getItem("access_token");
-
     const access = JSON.parse(localStorage.getItem("messaging_app_access"));
     const rs = await fetch(
       `http://localhost:3000/users?username=${access.username}`,
@@ -88,8 +91,6 @@ async function getUser() {
 
 async function getConversations(userId) {
   try {
-    // const token = localStorage.getItem("access_token");
-
     const access = JSON.parse(localStorage.getItem("messaging_app_access"));
     const rs = await fetch(
       `http://localhost:3000/conversations?userId=${userId}`,
@@ -103,12 +104,17 @@ async function getConversations(userId) {
 
     const conversations = await rs.json();
 
-    const friendId = conversations[0].userIds.filter((id) => id !== userId);
+    return conversations;
+  } catch (err) {
+    console.log(err);
+  }
+}
 
-    // console.log(friendId[0]);
-
+async function getCurrentConversation(userIds) {
+  try {
+    const access = JSON.parse(localStorage.getItem("messaging_app_access"));
     const currentConversationRes = await fetch(
-      `http://localhost:3000/conversations?userIds=${conversations[0].userIds}&friendId=${friendId[0]}`,
+      `http://localhost:3000/conversations?userIds=${userIds}`,
       {
         method: "GET",
         headers: {
@@ -118,11 +124,7 @@ async function getConversations(userId) {
     );
     const currentConversation = await currentConversationRes.json();
 
-    conversations.currentConversation = currentConversation;
-
-    // console.log(currentConversation);
-
-    return conversations;
+    return currentConversation;
   } catch (err) {
     console.log(err);
   }
