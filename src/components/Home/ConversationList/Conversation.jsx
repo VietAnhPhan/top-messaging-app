@@ -25,6 +25,14 @@ const Conversation = ({ conversation, userIds }) => {
       conversation: currentConversation,
       friend: currentConversation.friend,
     });
+
+    if (
+      !userContext.screen.isChatWindow ||
+      !userContext.screen.isConversationList
+    ) {
+      userContext.screen.setIsChatWindow(true);
+      userContext.screen.setIsConversationList(false);
+    }
   }
 
   return (

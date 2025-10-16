@@ -5,21 +5,38 @@ const ChatInput = () => {
   const userContext = useContext(UserContext);
   const [message, setMessage] = useState("");
   const currentConversation = { ...userContext.loaderData.currentConversation };
+  console.log(userContext.loaderData);
 
-  function handleClick() {
-    const lastMessage = {
-      conversationId: currentConversation.id,
-      message: message,
-      createdAt: new Date().toString(),
-      userId: userContext.loaderData.id,
-      id: 3,
-    };
-    const updatedMessages = [
-      ...userContext.loaderData.currentConversation.messages,
-      lastMessage,
-    ];
-    currentConversation.messages = updatedMessages;
-    userContext.handleSentMessage(currentConversation);
+  async function handleClick() {
+    try {
+      const lastMessage = {
+        conversationId: currentConversation.id,
+        message: message,
+        userId: userContext.loaderData.id,
+      };
+
+      const rs = await fetch("http://localhost:3000/messages", {
+        method: "POST",
+        body: JSON.stringify(lastMessage),
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `bearer ${userContext.loaderData.token}`,
+        },
+      });
+
+      if (rs.ok) {
+        const message = await rs.json();
+        const updatedMessages = [
+          ...userContext.loaderData.currentConversation.messages,
+          message,
+        ];
+
+        currentConversation.messages = updatedMessages;
+        userContext.handleSentMessage(currentConversation);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (

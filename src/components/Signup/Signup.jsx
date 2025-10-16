@@ -60,7 +60,13 @@ function Signup(props) {
         setAuthResults(result);
       }
 
-      localStorage.setItem("access_token", result.token);
+      localStorage.setItem(
+        "messaging_app_access",
+        JSON.stringify({
+          username: result.username,
+          token: result.token,
+        })
+      );
       navigate("/");
     } catch (e) {
       throw new Error(`Sign up error: ${e.message}`);
