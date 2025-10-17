@@ -12,8 +12,12 @@ const Profile = () => {
   const [isUpdate, setIsupdate] = useState(false);
   const [result, setResult] = useState("");
   const [validations, setValidations] = useState([]);
+
   const loaderData = useLoaderData();
-  const avatarRef = useRef(null);
+
+  const avatarInputRef = useRef(null);
+  const avatarPlaceholderRef = useRef(null);
+  const avatarUploadedRef = useRef(null);
 
   async function handleUpdate(formData) {
     const password = formData.get("password");
@@ -66,19 +70,23 @@ const Profile = () => {
   }
 
   async function handleUpload(e) {
+    avatarPlaceholderRef.current.style.display = "none";
+
     const avatarFile = e.target.files[0];
     if (!avatarFile.type.startsWith("image/")) {
       console.log("The file uploaded is not image!");
       return;
     }
 
-    avatarRef.current.classList.add("obj");
-    avatarRef.current.file = avatarFile;
+    avatarUploadedRef.current.style.display = "block";
+
+    avatarUploadedRef.current.classList.add("obj");
+    avatarUploadedRef.current.file = avatarFile;
 
     const reader = new FileReader();
 
     reader.onload = (e) => {
-      avatarRef.current.src = e.target.result;
+      avatarUploadedRef.current.src = e.target.result;
     };
 
     reader.readAsDataURL(avatarFile);
@@ -96,26 +104,35 @@ const Profile = () => {
             <label htmlFor="uploaded-avatar">
               {loaderData.avatarPath ? (
                 <img
-                  className="w-36"
+                  className="w-56"
                   src={`https://bkudoqbqykfhbgcxfelw.supabase.co/storage/v1/object/public/${loaderData.avatarPath}`}
-                  ref={avatarRef}
+                  ref={avatarInputRef}
                 ></img>
               ) : (
-                <svg
-                  className="w-36 h-36 text-gray-800 dark:text-white"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M12 20a7.966 7.966 0 0 1-5.002-1.756l.002.001v-.683c0-1.794 1.492-3.25 3.333-3.25h3.334c1.84 0 3.333 1.456 3.333 3.25v.683A7.966 7.966 0 0 1 12 20ZM2 12C2 6.477 6.477 2 12 2s10 4.477 10 10c0 5.5-4.44 9.963-9.932 10h-.138C6.438 21.962 2 17.5 2 12Zm10-5c-1.84 0-3.333 1.455-3.333 3.25S10.159 13.5 12 13.5c1.84 0 3.333-1.455 3.333-3.25S13.841 7 12 7Z"
-                    clipRule="evenodd"
+                <>
+                  <svg
+                    ref={avatarPlaceholderRef}
+                    className="w-36 h-36 text-gray-800 dark:text-white"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M12 20a7.966 7.966 0 0 1-5.002-1.756l.002.001v-.683c0-1.794 1.492-3.25 3.333-3.25h3.334c1.84 0 3.333 1.456 3.333 3.25v.683A7.966 7.966 0 0 1 12 20ZM2 12C2 6.477 6.477 2 12 2s10 4.477 10 10c0 5.5-4.44 9.963-9.932 10h-.138C6.438 21.962 2 17.5 2 12Zm10-5c-1.84 0-3.333 1.455-3.333 3.25S10.159 13.5 12 13.5c1.84 0 3.333-1.455 3.333-3.25S13.841 7 12 7Z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                  <img
+                    ref={avatarUploadedRef}
+                    src={null}
+                    alt="uploaded avatar"
+                    className="hidden w-56"
                   />
-                </svg>
+                </>
               )}
             </label>
             <input

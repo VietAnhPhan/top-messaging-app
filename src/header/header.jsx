@@ -13,7 +13,7 @@ export const Header = ({ loaderData }) => {
   }
 
   return (
-    <header className="flex md:flex-col justify-between items-center dark:bg-slate-800 py-8">
+    <header className="flex md:flex-col justify-between items-center dark:bg-slate-800 md:py-8">
       <Link to="/">
         <svg
           className="w-12 h-12 dark:text-gray-50"
@@ -31,8 +31,8 @@ export const Header = ({ loaderData }) => {
           />
         </svg>
       </Link>
-      <div>
-        <Link className="col-start-1" to="/profile">
+      <div className="flex md:block">
+        <Link className="col-start-1 flex md:block" to="/profile">
           {loaderData.avatarPath ? (
             <img
               className="w-36"
