@@ -41,3 +41,15 @@
 .read-the-docs {
   color: #888;
 }
+
+.profile__form input,
+textarea {
+  border: none;
+  border-bottom: 2px solid var(--color-gray-50);
+}
+
+.profile__form input:focus,
+textarea:focus {
+  outline-style: groove;
+  outline-color: var(--color-green-500);
+}
