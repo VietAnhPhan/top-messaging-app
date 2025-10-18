@@ -6,7 +6,7 @@ const MyMessage = ({ message }) => {
     <div className="flex justify-end bg-[#DBF8C6] justify-self-end py-3 px-2 z-10 relative">
       <div className="flex gap-x-10">
         <span>{message.message}</span>
-        {message.Media.length > 0 && (
+        {message.Media && message.Media.length > 0 && (
           <img
             className="w-52"
             src={`https://bkudoqbqykfhbgcxfelw.supabase.co/storage/v1/object/public/${message.Media[0].filePath}`}

@@ -16,7 +16,7 @@ function App() {
   return (
     <>
       <SupabaseContext value={supabase}>
-        <div className="flex flex-col-reverse md:flex-row h-full">
+        <div className="flex flex-col-reverse md:flex-row h-full dark:bg-slate-900">
           <Header loaderData={loaderData}></Header>
           <Outlet></Outlet>
         </div>

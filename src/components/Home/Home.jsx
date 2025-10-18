@@ -140,7 +140,10 @@ function Home(props) {
           >
             {/* Current friend */}
             <div className="flex dark:bg-slate-900">
-              <button className="md:hidden px-3" onClick={handleBacktoConversation}>
+              <button
+                className="md:hidden px-3"
+                onClick={handleBacktoConversation}
+              >
                 <svg
                   className="w-6 h-6 text-gray-800 dark:text-gray-50"
                   aria-hidden="true"
@@ -184,13 +187,12 @@ function Home(props) {
               </div>
             </div>
             {/* Chat window */}
-          
+
             <ChatWindow currentConversation={currentConversation}></ChatWindow>
 
             {/* Chat input */}
-           
-              <ChatInput></ChatInput>
-           
+
+            <ChatInput></ChatInput>
           </div>
         )}
 
