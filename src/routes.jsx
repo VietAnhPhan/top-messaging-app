@@ -5,6 +5,7 @@ import Login from "./components/Login/Login";
 import Signup from "./components/Signup/Signup";
 import Profile from "./components/Profile/Profile";
 import { UserContext } from "./Context";
+import Setting from "./components/Setting";
 
 const router = createBrowserRouter([
   {
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
       },
       {
         path: "/new-post",
+      },
+        {
+        path: "/settings",
+        element: <Setting></Setting>
       },
     ],
   },

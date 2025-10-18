@@ -1,17 +1,13 @@
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 
 import { useLoaderData } from "react-router";
-import { createClient } from "@supabase/supabase-js";
-
-const supabase = createClient(
-  import.meta.env.VITE_SUPABASE_PROJECT_URL,
-  import.meta.env.VITE_SUPABASE_API_KEY
-);
+import { SupabaseContext } from "../../Context";
 
 const Profile = () => {
   const [isUpdate, setIsupdate] = useState(false);
   const [result, setResult] = useState("");
   const [validations, setValidations] = useState([]);
+  const supabaseContext = useContext(SupabaseContext);
 
   const loaderData = useLoaderData();
 
@@ -25,7 +21,7 @@ const Profile = () => {
     const uploadeAvatar = formData.get("uploaded_avatar");
 
     if (uploadeAvatar) {
-      const { data, error } = await supabase.storage
+      const { data, error } = await supabaseContext.storage
         .from("avatars")
         .upload(`${loaderData.username}/${uploadeAvatar.name}`, uploadeAvatar);
 
@@ -93,8 +89,8 @@ const Profile = () => {
   }
 
   return (
-    <div className="md:grid md:grid-cols-3 flex-1">
-      <div className="p-8 flex flex-col gap-y-4">
+    <div className="md:grid md:grid-cols-3 flex-1 overflow-y-auto p-8">
+      <div className="flex flex-col gap-y-4">
         <p className="dark:text-gray-50 text-2xl">Profile</p>
         <form
           action={handleUpdate}
@@ -104,7 +100,7 @@ const Profile = () => {
             <label htmlFor="uploaded-avatar">
               {loaderData.avatarPath ? (
                 <img
-                  className="w-56"
+                  className="w-36"
                   src={`https://bkudoqbqykfhbgcxfelw.supabase.co/storage/v1/object/public/${loaderData.avatarPath}`}
                   ref={avatarInputRef}
                 ></img>
@@ -130,7 +126,7 @@ const Profile = () => {
                     ref={avatarUploadedRef}
                     src={null}
                     alt="uploaded avatar"
-                    className="hidden w-56"
+                    className="hidden w-36"
                   />
                 </>
               )}

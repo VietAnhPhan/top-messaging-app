@@ -1,12 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import { useLoaderData } from "react-router";
-import MyMessage from "./ConversationRoom/MyMessage";
-import OthersMessage from "./ConversationRoom/OthersMessage";
 import ConversationList from "./ConversationList/ConversationList";
 import ContactList from "./ContactList/ContactList";
 import ContactInfo from "./ContactInfo/ContactInfo";
 import { UserContext } from "../../Context";
 import ChatInput from "./ConversationRoom/ChatInput";
+import ChatWindow from "./ConversationRoom/ChatWindow";
 
 function Home(props) {
   const loaderData = useLoaderData();
@@ -98,13 +97,13 @@ function Home(props) {
       }}
     >
       <div
-        className="grid grid-cols-1 md:grid-cols-[25%_50%_25%] h-full flex-1"
+        className="grid grid-cols-1 md:grid-cols-3 h-full flex-1"
         ref={containerRef}
       >
         <title>{`Homepage | ${props.sitename}`}</title>
         {/* Column 1*/}
         {isConversationList && (
-          <div className="md:col-span-1 border-l-[1px] border-[#DADADA] md:flex flex-col overflow-auto">
+          <div className="md:col-span-1 md:flex flex-col border-r-[1px] border-r-slate-700 dark:bg-slate-900">
             {/* Profile header*/}
             <div className="px-4">
               <img src="/logo-1024x200.png" alt="" className="w-52 pt-3 pb-4" />
@@ -117,7 +116,7 @@ function Home(props) {
               />
             </div>
             {/* Contact list*/}
-            <div className="border-0 border-[#DADADA] overflow-y-scroll">
+            <div className="border-0 border-[#DADADA] overflow-auto">
               {contacts.length > 0 ? (
                 <ContactList
                   contacts={contacts}
@@ -137,13 +136,13 @@ function Home(props) {
           <div
             className={`${
               isOpenContactInfo ? "col-span-1" : "col-span-2"
-            } row-span-1 border-l-[1px] border-[#DADADA] bg-[#EDEDED] flex flex-col overflow-auto`}
+            } row-span-1 flex flex-col overflow-auto dark:bg-slate-900 relative`}
           >
             {/* Current friend */}
-            <div className="flex">
-              <button onClick={handleBacktoConversation}>
+            <div className="flex dark:bg-slate-900">
+              <button className="md:hidden px-3" onClick={handleBacktoConversation}>
                 <svg
-                  className="md:hidden w-6 h-6 text-gray-800"
+                  className="w-6 h-6 text-gray-800 dark:text-gray-50"
                   aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
@@ -161,12 +160,12 @@ function Home(props) {
                 </svg>
               </button>
               <div
-                className="flex items-center px-2 py-3"
+                className="flex items-center px-3 py-2"
                 onClick={handleOpenContactInfo}
               >
                 <div className="hover:cursor-pointer flex items-center gap-x-3">
                   <svg
-                    className="w-[48px] h-[48px] text-gray-800 hover:cursor-pointer"
+                    className="w-9 h-9 text-gray-800 dark:text-gray-50 hover:cursor-pointer"
                     aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -180,37 +179,18 @@ function Home(props) {
                       clipRule="evenodd"
                     />
                   </svg>
-                  <p>{currentName}</p>
+                  <p className="dark:text-gray-50">{currentName}</p>
                 </div>
               </div>
             </div>
             {/* Chat window */}
-            <div className="border-0 border-[#DADADA] bg-[#DDDBD1] relative overflow-y-scroll flex-1">
-              <div className="px-13">
-                {currentConversation.messages.length > 0 &&
-                  currentConversation.messages.map((message) => {
-                    if (message.userId === loaderData.id) {
-                      return (
-                        <MyMessage
-                          key={message.id}
-                          message={message}
-                        ></MyMessage>
-                      );
-                    } else
-                      return (
-                        <OthersMessage
-                          key={message.id}
-                          message={message}
-                        ></OthersMessage>
-                      );
-                  })}
-              </div>
-              <div className="bg-[url(/bg-chat-room.png)] w-full h-full opacity-5 absolute top-0"></div>
-            </div>
+          
+            <ChatWindow currentConversation={currentConversation}></ChatWindow>
+
             {/* Chat input */}
-            <div className="border-0 border-[#DADADA] bg-[#EDEDED] flex py-4 px-6 gap-x-4">
+           
               <ChatInput></ChatInput>
-            </div>
+           
           </div>
         )}
 
