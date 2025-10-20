@@ -21,7 +21,7 @@ const ChatWindow = ({ currentConversation }) => {
               );
           })}
       </div>
-      <div className="bg-[url(/bg-chat-room.png)] w-full h-full opacity-80 absolute top-0"></div>
+      <div className="bg-[url(/m5BEg2K4OR4.png)] w-full h-full opacity-8 absolute top-0"></div>
     </div>
   );
 };

@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useLoaderData } from "react-router";
 import ConversationList from "./ConversationList/ConversationList";
-import ContactList from "./ContactList/ContactList";
+import ContactSearchList from "./ContactList/ContactSearchList";
 import ContactInfo from "./ContactInfo/ContactInfo";
 import { UserContext } from "../../Context";
 import ChatInput from "./ConversationRoom/ChatInput";
@@ -97,7 +97,7 @@ function Home(props) {
       }}
     >
       <div
-        className="grid grid-cols-1 md:grid-cols-3 h-full flex-1"
+        className="grid grid-cols-1 md:grid-cols-[30%_40%_30%] h-full flex-1"
         ref={containerRef}
       >
         <title>{`Homepage | ${props.sitename}`}</title>
@@ -118,10 +118,10 @@ function Home(props) {
             {/* Contact list*/}
             <div className="border-0 border-[#DADADA] overflow-auto">
               {contacts.length > 0 ? (
-                <ContactList
+                <ContactSearchList
                   contacts={contacts}
                   handleSelect={handleSelectContact}
-                ></ContactList>
+                ></ContactSearchList>
               ) : (
                 <ConversationList
                   conversations={loaderData.conversations}
