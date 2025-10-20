@@ -4,12 +4,18 @@ import { useLoaderData } from "react-router";
 import { SupabaseContext } from "../../Context";
 
 const Profile = () => {
+  const loaderData = useLoaderData();
+
+  const [password, setPassword] = useState("");
+  const [repeatPassword, setrepeatPassword] = useState("");
+  const [fullname, setFullname] = useState(loaderData.name);
+  const [about, setAbout] = useState(loaderData.about);
+  const [phone, setPhone] = useState(loaderData.phone);
+
   const [isUpdate, setIsupdate] = useState(false);
   const [result, setResult] = useState("");
   const [validations, setValidations] = useState([]);
   const supabaseContext = useContext(SupabaseContext);
-
-  const loaderData = useLoaderData();
 
   const avatarInputRef = useRef(null);
   const avatarPlaceholderRef = useRef(null);
@@ -20,10 +26,12 @@ const Profile = () => {
     const repeatPassword = formData.get("repeat_password");
     const uploadeAvatar = formData.get("uploaded_avatar");
 
-    if (uploadeAvatar) {
+    if (uploadeAvatar.name !== "") {
       const { data, error } = await supabaseContext.storage
         .from("avatars")
-        .upload(`${loaderData.username}/${uploadeAvatar.name}`, uploadeAvatar);
+        .upload(`${loaderData.username}/${uploadeAvatar.name}`, uploadeAvatar, {
+          upsert: true,
+        });
 
       if (data) {
         console.log(data);
@@ -55,6 +63,7 @@ const Profile = () => {
       }
     );
     if (response.ok) {
+      
       setIsupdate(false);
       setResult("You updated successfully!");
     }
@@ -66,7 +75,8 @@ const Profile = () => {
   }
 
   async function handleUpload(e) {
-    avatarPlaceholderRef.current.style.display = "none";
+    if (avatarPlaceholderRef.current)
+      avatarPlaceholderRef.current.style.display = "none";
 
     const avatarFile = e.target.files[0];
     if (!avatarFile.type.startsWith("image/")) {
@@ -122,14 +132,14 @@ const Profile = () => {
                       clipRule="evenodd"
                     />
                   </svg>
-                  <img
-                    ref={avatarUploadedRef}
-                    src={null}
-                    alt="uploaded avatar"
-                    className="hidden w-36"
-                  />
                 </>
               )}
+              <img
+                ref={avatarUploadedRef}
+                src={null}
+                alt="uploaded avatar"
+                className="hidden w-36"
+              />
             </label>
             <input
               type="file"
@@ -149,7 +159,7 @@ const Profile = () => {
               id="username"
               className="p-1.5 w-full dark:text-gray-50"
               defaultValue={loaderData.username}
-              required
+              disabled
             />
           </div>
           <div className="flex flex-col">
@@ -161,10 +171,10 @@ const Profile = () => {
               name="password"
               id="password"
               className="p-1.5 w-full dark:text-gray-50"
-              required
               minLength={8}
               maxLength={30}
-              defaultValue=""
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
           <div className="flex flex-col">
@@ -176,10 +186,10 @@ const Profile = () => {
               name="repeat_password"
               id="repeat_password"
               className="p-1.5 w-full dark:text-gray-50"
-              required
               minLength={8}
               maxLength={30}
-              defaultValue=""
+              value={repeatPassword}
+              onChange={(e) => setrepeatPassword(e.target.value)}
             />
           </div>
           <div className="flex flex-col">
@@ -192,16 +202,20 @@ const Profile = () => {
               id="fullname"
               className="p-1.5 w-full dark:text-gray-50"
               required
-              defaultValue={loaderData.name}
+              value={fullname}
+              onChange={(e) => setFullname(e.target.value)}
             />
           </div>
           <div className="flex flex-col">
             <label htmlFor="password" className="text-zinc-500">
               About:
             </label>
-            <textarea className="dark:text-gray-50" name="about">
-              {loaderData.about}
-            </textarea>
+            <textarea
+              className="dark:text-gray-50"
+              name="about"
+              defaultValue={about}
+              onChange={(e) => setAbout(e.target.value)}
+            ></textarea>
           </div>
           <div className="flex flex-col">
             <label htmlFor="password" className="text-zinc-500">
@@ -210,8 +224,9 @@ const Profile = () => {
             <input
               type="tel"
               name="phone"
-              defaultValue={loaderData.phone}
+              value={phone}
               className="dark:text-gray-50"
+              onChange={(e) => setPhone(e.target.value)}
             />
           </div>
           <div className="flex gap-2.5">
