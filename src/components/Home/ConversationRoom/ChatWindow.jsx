@@ -8,7 +8,8 @@ const ChatWindow = ({ currentConversation }) => {
   return (
     <div className="border-0 border-[#DADADA] dark:bg-slate-900 opacity-95 relative overflow-auto flex-1">
       <div className="px-13">
-        {currentConversation.messages.length > 0 &&
+        {currentConversation &&
+          currentConversation.messages.length > 0 &&
           currentConversation.messages.map((message) => {
             if (message.userId === userContext.loaderData.id) {
               return <MyMessage key={message.id} message={message}></MyMessage>;

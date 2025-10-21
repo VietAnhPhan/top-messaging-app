@@ -19,7 +19,7 @@ const Conversation = ({ conversation, userIds }) => {
 
   async function handleClick() {
     const rs = await fetch(
-      `http://localhost:3000/conversations?userIds=${userIds}&friendId=${friendId[0]}`,
+      `http://localhost:3000/conversations?userIds=${userIds}`,
       {
         method: "GET",
         headers: {
@@ -30,10 +30,7 @@ const Conversation = ({ conversation, userIds }) => {
 
     const currentConversation = await rs.json();
 
-    userContext.handleCurrentConversation({
-      conversation: currentConversation,
-      friend: currentConversation.friend,
-    });
+    userContext.handleCurrentConversation(currentConversation);
 
     if (
       !userContext.screen.isChatWindow ||
@@ -45,10 +42,7 @@ const Conversation = ({ conversation, userIds }) => {
   }
 
   return (
-    <div
-      className="p-4 hover:bg-slate-800"
-      onClick={handleClick}
-    >
+    <div className="p-4 hover:bg-slate-800" onClick={handleClick}>
       <div className="flex justify-between">
         <div className="flex items-center gap-x-3">
           <svg

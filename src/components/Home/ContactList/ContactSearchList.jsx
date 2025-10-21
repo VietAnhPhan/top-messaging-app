@@ -19,10 +19,7 @@ const ContactSearchList = ({ contacts }) => {
 
     const currentConversation = await rs.json();
 
-    userContext.handleCurrentConversation({
-      conversation: currentConversation,
-      friend: currentConversation.ChatMember,
-    });
+    userContext.handleCurrentConversation(currentConversation);
 
     if (
       !userContext.screen.isChatWindow ||
