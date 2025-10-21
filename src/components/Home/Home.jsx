@@ -70,7 +70,7 @@ function Home(props) {
       return;
     }
     const rs = await fetch(
-      `http://localhost:3000/users?username=${e.target.value}&search=true`,
+      `http://localhost:3000/users?contact=${e.target.value}&search=true`,
       {
         method: "GET",
         headers: { Authorization: `bearer ${loaderData.token}` },
