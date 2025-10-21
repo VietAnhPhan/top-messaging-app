@@ -18,7 +18,9 @@ function App() {
       <SupabaseContext value={supabase}>
         <div className="flex flex-col-reverse md:flex-row h-full dark:bg-slate-900">
           <Header loaderData={loaderData}></Header>
-          <Outlet></Outlet>
+          <div className="grid grid-cols-1 md:grid-cols-[25%_50%_25%] h-full flex-1 p-4">
+            <Outlet></Outlet>
+          </div>
         </div>
       </SupabaseContext>
     </>

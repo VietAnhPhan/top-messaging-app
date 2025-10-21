@@ -5,23 +5,43 @@ import { Link } from "react-router";
 export const Header = ({ loaderData }) => {
   return (
     <header className="flex md:flex-col justify-between items-center dark:bg-slate-800 md:py-8 px-3 border-r-[1px] border-r-slate-700 ">
-      <Link to="/">
-        <svg
-          className="w-8 h-8 dark:text-gray-50"
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          fill="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            fillRule="evenodd"
-            d="M3 5.983C3 4.888 3.895 4 5 4h14c1.105 0 2 .888 2 1.983v8.923a1.992 1.992 0 0 1-2 1.983h-6.6l-2.867 2.7c-.955.899-2.533.228-2.533-1.08v-1.62H5c-1.105 0-2-.888-2-1.983V5.983Zm5.706 3.809a1 1 0 1 0-1.412 1.417 1 1 0 1 0 1.412-1.417Zm2.585.002a1 1 0 1 1 .003 1.414 1 1 0 0 1-.003-1.414Zm5.415-.002a1 1 0 1 0-1.412 1.417 1 1 0 1 0 1.412-1.417Z"
-            clipRule="evenodd"
-          />
-        </svg>
-      </Link>
+      <div className="flex flex-col gap-y-3">
+        <Link to="/">
+          <svg
+            className="w-8 h-8 dark:text-gray-50"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            fill="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              fillRule="evenodd"
+              d="M3 5.983C3 4.888 3.895 4 5 4h14c1.105 0 2 .888 2 1.983v8.923a1.992 1.992 0 0 1-2 1.983h-6.6l-2.867 2.7c-.955.899-2.533.228-2.533-1.08v-1.62H5c-1.105 0-2-.888-2-1.983V5.983Zm5.706 3.809a1 1 0 1 0-1.412 1.417 1 1 0 1 0 1.412-1.417Zm2.585.002a1 1 0 1 1 .003 1.414 1 1 0 0 1-.003-1.414Zm5.415-.002a1 1 0 1 0-1.412 1.417 1 1 0 1 0 1.412-1.417Z"
+              clipRule="evenodd"
+            />
+          </svg>
+        </Link>
+        <Link to="/friends">
+          <svg
+            className="w-8 h-8 text-gray-800 dark:text-white"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke="currentColor"
+              strokeLinecap="round"
+              strokeWidth="2"
+              d="M16 19h4a1 1 0 0 0 1-1v-1a3 3 0 0 0-3-3h-2m-2.236-4a3 3 0 1 0 0-4M3 18v-1a3 3 0 0 1 3-3h4a3 3 0 0 1 3 3v1a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1Zm8-10a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+            />
+          </svg>
+        </Link>
+      </div>
 
       <div className="flex flex-col gap-y-3">
         <Link to="/settings">
@@ -51,12 +71,7 @@ export const Header = ({ loaderData }) => {
                 style={{
                   backgroundImage: `url(https://bkudoqbqykfhbgcxfelw.supabase.co/storage/v1/object/public/${loaderData.avatarPath})`,
                 }}
-              >
-                {/* <img
-                  className="w-36"
-                  src={`https://bkudoqbqykfhbgcxfelw.supabase.co/storage/v1/object/public/${loaderData.avatarPath}`}
-                ></img> */}
-              </div>
+              ></div>
             ) : (
               <svg
                 className="w-[48px] h-[48px] dark:text-gray-50"
@@ -74,7 +89,6 @@ export const Header = ({ loaderData }) => {
                 />
               </svg>
             )}
-            {/* <p className="dark:text-gray-50">{loaderData.name}</p> */}
           </Link>
         </div>
       </div>

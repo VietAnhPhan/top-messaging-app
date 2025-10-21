@@ -99,189 +99,187 @@ const Profile = () => {
   }
 
   return (
-    <div className="md:grid md:grid-cols-3 flex-1 overflow-y-auto p-8">
-      <div className="flex flex-col gap-y-4">
-        <p className="dark:text-gray-50 text-2xl">Profile</p>
-        <form
-          action={handleUpdate}
-          className="flex flex-col col-span-1 profile__form gap-y-8"
-        >
-          <div className="flex justify-center">
-            <label htmlFor="uploaded-avatar">
-              {loaderData.avatarPath ? (
-                <img
-                  className="w-36"
-                  src={`https://bkudoqbqykfhbgcxfelw.supabase.co/storage/v1/object/public/${loaderData.avatarPath}`}
-                  ref={avatarInputRef}
-                ></img>
-              ) : (
-                <>
-                  <svg
-                    ref={avatarPlaceholderRef}
-                    className="w-36 h-36 text-gray-800 dark:text-white"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M12 20a7.966 7.966 0 0 1-5.002-1.756l.002.001v-.683c0-1.794 1.492-3.25 3.333-3.25h3.334c1.84 0 3.333 1.456 3.333 3.25v.683A7.966 7.966 0 0 1 12 20ZM2 12C2 6.477 6.477 2 12 2s10 4.477 10 10c0 5.5-4.44 9.963-9.932 10h-.138C6.438 21.962 2 17.5 2 12Zm10-5c-1.84 0-3.333 1.455-3.333 3.25S10.159 13.5 12 13.5c1.84 0 3.333-1.455 3.333-3.25S13.841 7 12 7Z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                </>
-              )}
+    <div className="flex flex-col gap-y-4">
+      <p className="dark:text-gray-50 text-2xl">Profile</p>
+      <form
+        action={handleUpdate}
+        className="flex flex-col col-span-1 profile__form gap-y-8"
+      >
+        <div className="flex justify-center">
+          <label htmlFor="uploaded-avatar">
+            {loaderData.avatarPath ? (
               <img
-                ref={avatarUploadedRef}
-                src={null}
-                alt="uploaded avatar"
-                className="hidden w-36"
-              />
-            </label>
-            <input
-              type="file"
-              name="uploaded_avatar"
-              id="uploaded-avatar"
-              className="dark:text-gray-50 hidden"
-              onChange={handleUpload}
+                className="w-36"
+                src={`https://bkudoqbqykfhbgcxfelw.supabase.co/storage/v1/object/public/${loaderData.avatarPath}`}
+                ref={avatarInputRef}
+              ></img>
+            ) : (
+              <>
+                <svg
+                  ref={avatarPlaceholderRef}
+                  className="w-36 h-36 text-gray-800 dark:text-white"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M12 20a7.966 7.966 0 0 1-5.002-1.756l.002.001v-.683c0-1.794 1.492-3.25 3.333-3.25h3.334c1.84 0 3.333 1.456 3.333 3.25v.683A7.966 7.966 0 0 1 12 20ZM2 12C2 6.477 6.477 2 12 2s10 4.477 10 10c0 5.5-4.44 9.963-9.932 10h-.138C6.438 21.962 2 17.5 2 12Zm10-5c-1.84 0-3.333 1.455-3.333 3.25S10.159 13.5 12 13.5c1.84 0 3.333-1.455 3.333-3.25S13.841 7 12 7Z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </>
+            )}
+            <img
+              ref={avatarUploadedRef}
+              src={null}
+              alt="uploaded avatar"
+              className="hidden w-36"
             />
-          </div>
-          <div className="flex flex-col">
-            <label htmlFor="username" className="text-zinc-500">
-              Username:
-            </label>
-            <input
-              type="text"
-              name="username"
-              id="username"
-              className="p-1.5 w-full dark:text-gray-50"
-              defaultValue={loaderData.username}
+          </label>
+          <input
+            type="file"
+            name="uploaded_avatar"
+            id="uploaded-avatar"
+            className="dark:text-gray-50 hidden"
+            onChange={handleUpload}
+          />
+        </div>
+        <div className="flex flex-col">
+          <label htmlFor="username" className="text-zinc-500">
+            Username:
+          </label>
+          <input
+            type="text"
+            name="username"
+            id="username"
+            className="p-1.5 w-full dark:text-gray-50"
+            defaultValue={loaderData.username}
+            disabled
+          />
+        </div>
+        <div className="flex flex-col">
+          <label htmlFor="password" className="text-zinc-500">
+            Password:
+          </label>
+          <input
+            type="password"
+            name="password"
+            id="password"
+            className="p-1.5 w-full dark:text-gray-50"
+            minLength={8}
+            maxLength={30}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
+        <div className="flex flex-col">
+          <label htmlFor="password" className="text-zinc-500">
+            Repeat Password:
+          </label>
+          <input
+            type="password"
+            name="repeat_password"
+            id="repeat_password"
+            className="p-1.5 w-full dark:text-gray-50"
+            minLength={8}
+            maxLength={30}
+            value={repeatPassword}
+            onChange={(e) => setrepeatPassword(e.target.value)}
+          />
+        </div>
+        <div className="flex flex-col">
+          <label htmlFor="password" className="text-zinc-500">
+            Fullname:
+          </label>
+          <input
+            type="text"
+            name="name"
+            id="fullname"
+            className="p-1.5 w-full dark:text-gray-50"
+            required
+            value={fullname}
+            onChange={(e) => setFullname(e.target.value)}
+          />
+        </div>
+        <div className="flex flex-col">
+          <label htmlFor="password" className="text-zinc-500">
+            About:
+          </label>
+          <textarea
+            className="dark:text-gray-50"
+            name="about"
+            defaultValue={about}
+            onChange={(e) => setAbout(e.target.value)}
+          ></textarea>
+        </div>
+        <div className="flex flex-col">
+          <label htmlFor="password" className="text-zinc-500">
+            Phone:
+          </label>
+          <input
+            type="tel"
+            name="phone"
+            value={phone? phone:""}
+            className="dark:text-gray-50"
+            onChange={(e) => setPhone(e.target.value)}
+          />
+        </div>
+        <div className="flex gap-2.5">
+          {isUpdate ? (
+            <button
+              type="submit"
+              className="mt-5 bg-blue-700 text-white flex-1 p-2 hover:cursor-pointer"
+            >
+              Update
+            </button>
+          ) : (
+            <button
+              type="submit"
+              className="mt-5 text-white flex-1 bg-gray-500 p-2 hover:cursor-pointer"
               disabled
-            />
-          </div>
-          <div className="flex flex-col">
-            <label htmlFor="password" className="text-zinc-500">
-              Password:
-            </label>
-            <input
-              type="password"
-              name="password"
-              id="password"
-              className="p-1.5 w-full dark:text-gray-50"
-              minLength={8}
-              maxLength={30}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
-          <div className="flex flex-col">
-            <label htmlFor="password" className="text-zinc-500">
-              Repeat Password:
-            </label>
-            <input
-              type="password"
-              name="repeat_password"
-              id="repeat_password"
-              className="p-1.5 w-full dark:text-gray-50"
-              minLength={8}
-              maxLength={30}
-              value={repeatPassword}
-              onChange={(e) => setrepeatPassword(e.target.value)}
-            />
-          </div>
-          <div className="flex flex-col">
-            <label htmlFor="password" className="text-zinc-500">
-              Fullname:
-            </label>
-            <input
-              type="text"
-              name="name"
-              id="fullname"
-              className="p-1.5 w-full dark:text-gray-50"
-              required
-              value={fullname}
-              onChange={(e) => setFullname(e.target.value)}
-            />
-          </div>
-          <div className="flex flex-col">
-            <label htmlFor="password" className="text-zinc-500">
-              About:
-            </label>
-            <textarea
-              className="dark:text-gray-50"
-              name="about"
-              defaultValue={about}
-              onChange={(e) => setAbout(e.target.value)}
-            ></textarea>
-          </div>
-          <div className="flex flex-col">
-            <label htmlFor="password" className="text-zinc-500">
-              Phone:
-            </label>
-            <input
-              type="tel"
-              name="phone"
-              value={phone}
-              className="dark:text-gray-50"
-              onChange={(e) => setPhone(e.target.value)}
-            />
-          </div>
-          <div className="flex gap-2.5">
-            {isUpdate ? (
-              <button
-                type="submit"
-                className="mt-5 bg-blue-700 text-white flex-1 p-2 hover:cursor-pointer"
-              >
-                Update
-              </button>
-            ) : (
-              <button
-                type="submit"
-                className="mt-5 text-white flex-1 bg-gray-500 p-2 hover:cursor-pointer"
-                disabled
-              >
-                Update
-              </button>
-            )}
-            {isUpdate ? (
-              <button
-                type="button"
-                className={
-                  "mt-5 bg-blue-700 text-white flex-1 hover:cursor-pointer"
-                }
-                onClick={handleEdit}
-              >
-                Cancel
-              </button>
-            ) : (
-              <button
-                type="button"
-                className={
-                  "mt-5 bg-blue-700 text-white flex-1 hover:cursor-pointer"
-                }
-                onClick={handleEdit}
-              >
-                Edit
-              </button>
-            )}
-          </div>
-          {validations.length > 0 && (
-            <ul>
-              {validations.map((validation, index) => {
-                return (
-                  <li key={index} className="text-red-500 ">
-                    {validation}
-                  </li>
-                );
-              })}
-            </ul>
+            >
+              Update
+            </button>
           )}
-          {result ? <p>{result}</p> : ""}
-        </form>
-      </div>
+          {isUpdate ? (
+            <button
+              type="button"
+              className={
+                "mt-5 bg-blue-700 text-white flex-1 hover:cursor-pointer"
+              }
+              onClick={handleEdit}
+            >
+              Cancel
+            </button>
+          ) : (
+            <button
+              type="button"
+              className={
+                "mt-5 bg-blue-700 text-white flex-1 hover:cursor-pointer"
+              }
+              onClick={handleEdit}
+            >
+              Edit
+            </button>
+          )}
+        </div>
+        {validations.length > 0 && (
+          <ul>
+            {validations.map((validation, index) => {
+              return (
+                <li key={index} className="text-red-500 ">
+                  {validation}
+                </li>
+              );
+            })}
+          </ul>
+        )}
+        {result ? <p>{result}</p> : ""}
+      </form>
     </div>
   );
 };
