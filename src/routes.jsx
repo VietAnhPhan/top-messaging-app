@@ -6,6 +6,7 @@ import Signup from "./components/Signup/Signup";
 import Profile from "./components/Profile/Profile";
 import { UserContext } from "./Context";
 import Setting from "./components/Setting";
+import Friend from "./components/Home/Friend";
 
 const router = createBrowserRouter([
   {
@@ -31,9 +32,14 @@ const router = createBrowserRouter([
       {
         path: "/new-post",
       },
-        {
+      {
         path: "/settings",
-        element: <Setting></Setting>
+        element: <Setting></Setting>,
+      },
+      {
+        path: "/friends",
+        loader: friendsLoader,
+        element: <Friend></Friend>,
       },
     ],
   },
@@ -64,13 +70,28 @@ function dataLoader({ context }) {
 async function homeLoader({ context }) {
   const user = context.get(UserContext);
   const conversations = await getConversations(user.id);
-  const currentConversation = await getCurrentConversation(
-    conversations[0].userIds
-  );
+  let currentConversation = null;
+  if (conversations.length > 0) {
+    currentConversation = await getCurrentConversation(
+      conversations[0].userIds
+    );
+  }
+
   user.conversations = conversations;
   user.currentConversation = currentConversation;
 
   return user;
+}
+
+async function friendsLoader({ context }) {
+  const user = context.get(UserContext);
+  const sentRequests = await getSentRequest(user);
+
+  const friends = {
+    sentRequests,
+  };
+
+  return friends;
 }
 
 async function getUser() {
@@ -130,6 +151,25 @@ async function getCurrentConversation(userIds) {
     const currentConversation = await currentConversationRes.json();
 
     return currentConversation;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+async function getSentRequest(sender) {
+  try {
+    const friendReqRes = await fetch(
+      `http://localhost:3000/friendrequests?friend_request=true&sender_id=${sender.id}`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `bearer ${sender.token}`,
+        },
+      }
+    );
+    const friendrequests = await friendReqRes.json();
+
+    return friendrequests;
   } catch (err) {
     console.log(err);
   }
