@@ -3,7 +3,7 @@ const MyMessage = ({ message }) => {
   const sentAtHour = sentAt.getHours() + ":" + sentAt.getMinutes();
 
   return (
-    <div className="flex justify-end bg-[#DBF8C6] justify-self-end py-3 px-2 z-10 relative">
+    <div className="flex justify-end bg-[#DBF8C6] justify-self-end py-3 px-2 z-10 relative my-5">
       <div className="flex gap-x-10">
         <span>{message.message}</span>
         {message.Media && message.Media.length > 0 && (
