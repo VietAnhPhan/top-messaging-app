@@ -70,15 +70,18 @@ function dataLoader({ context }) {
 async function homeLoader({ context }) {
   const user = context.get(UserContext);
   const conversations = await getConversations(user.id);
+  let chatUser = null;
   let currentConversation = null;
   if (conversations.length > 0) {
     currentConversation = await getCurrentConversation(
       conversations[0].userIds
     );
+    chatUser = await getChatUser(currentConversation.id, user.id);
   }
 
   user.conversations = conversations;
   user.currentConversation = currentConversation;
+  user.chatUser = chatUser;
 
   return user;
 }
@@ -151,6 +154,26 @@ async function getCurrentConversation(userIds) {
     const currentConversation = await currentConversationRes.json();
 
     return currentConversation;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+async function getChatUser(conversationId, authId) {
+  try {
+    const access = JSON.parse(localStorage.getItem("messaging_app_access"));
+    const chatUserRes = await fetch(
+      `http://localhost:3000/users?conversation_id=${conversationId}&auth_id=${authId}`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `bearer ${access.token}`,
+        },
+      }
+    );
+    const chatUser = await chatUserRes.json();
+
+    return chatUser;
   } catch (err) {
     console.log(err);
   }

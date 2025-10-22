@@ -15,17 +15,11 @@ function Home(props) {
     loaderData.currentConversation
   );
 
-  const [currentName, setCurrentName] = useState(
-    loaderData.currentConversation
-      ? loaderData.currentConversation.ChatMember[0].user.name
-      : ""
-  );
+  const [chatUser, setchatUser] = useState(loaderData.chatUser);
 
   const [isChatWindow, setIsChatWindow] = useState(false);
   const [isConversationList, setIsConversationList] = useState(true);
   const [isOpenContactInfo, setIsOpenContactInfo] = useState(true);
-
-  const containerRef = useRef(null);
 
   useEffect(() => {
     if (window.innerWidth >= 768 && (!isChatWindow || !isConversationList)) {
@@ -44,15 +38,8 @@ function Home(props) {
     };
   }, []);
 
-  function handleSelectContact(name) {
-    setCurrentName(name);
-  }
-
   function handleCurrentConversation(current) {
-    if (current) {
-      setCurrentConversation(current);
-      setCurrentName(current.ChatMember[0].user.name);
-    }
+    setCurrentConversation(current);
   }
 
   function handleSentMessage(current) {
@@ -86,12 +73,17 @@ function Home(props) {
     setIsChatWindow(false);
   }
 
+  function handlechatUser(user) {
+    setchatUser(user);
+  }
+
   return (
     <UserContext
       value={{
         loaderData,
         handleCurrentConversation,
         handleSentMessage,
+        handlechatUser,
         screen: {
           isChatWindow,
           setIsChatWindow,
@@ -118,10 +110,7 @@ function Home(props) {
           {/* Contact list*/}
           <div className="overflow-auto">
             {contacts.length > 0 ? (
-              <ContactSearchList
-                contacts={contacts}
-                handleSelect={handleSelectContact}
-              ></ContactSearchList>
+              <ContactSearchList contacts={contacts}></ContactSearchList>
             ) : (
               <ConversationList
                 conversations={loaderData.conversations}
@@ -182,7 +171,7 @@ function Home(props) {
                     clipRule="evenodd"
                   />
                 </svg>
-                <p className="dark:text-gray-50">{currentName}</p>
+                <p className="dark:text-gray-50">{chatUser.name}</p>
               </div>
             </div>
           </div>
@@ -200,11 +189,7 @@ function Home(props) {
       {isOpenContactInfo && (
         <div className="border-[1px] border-[#DADADA] bg-[#EDEDED] py-4 px-6 gap-x-4">
           <ContactInfo
-            currentContact={
-              currentConversation
-                ? currentConversation.ChatMember[0].user
-                : null
-            }
+            currentContact={chatUser ? chatUser : null}
           ></ContactInfo>
         </div>
       )}

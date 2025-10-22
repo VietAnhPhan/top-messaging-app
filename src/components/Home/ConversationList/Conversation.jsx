@@ -3,10 +3,6 @@ import { UserContext } from "../../../Context";
 
 const Conversation = ({ conversation, userIds }) => {
   const userContext = useContext(UserContext);
-  // console.log(conversation.ChatMember);
-  const friendId = conversation.userIds.filter(
-    (id) => id !== userContext.loaderData.id
-  );
 
   const lastTime = new Date(conversation.messages[0].createdAt);
   const lastTimeFortmat =
@@ -30,7 +26,22 @@ const Conversation = ({ conversation, userIds }) => {
 
     const currentConversation = await rs.json();
 
+    const chatUserRes = await fetch(
+      `http://localhost:3000/users?conversation_id=${currentConversation.id}&auth_id=${userContext.loaderData.id}`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `bearer ${userContext.loaderData.token}`,
+        },
+      }
+    );
+
+    const chatUser = await chatUserRes.json();
+
+    console.log(chatUser);
+
     userContext.handleCurrentConversation(currentConversation);
+    userContext.handlechatUser(chatUser);
 
     if (
       !userContext.screen.isChatWindow ||
@@ -46,7 +57,7 @@ const Conversation = ({ conversation, userIds }) => {
       <div className="flex justify-between">
         <div className="flex items-center gap-x-3">
           <svg
-            className="w-[48px] h-[48px] text-gray-800 dark:text-gray-50"
+            className="w-[48px] h-[48px] text-gray-800 dark:text-gray-50 shrink-0"
             aria-hidden="true"
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -60,7 +71,7 @@ const Conversation = ({ conversation, userIds }) => {
               clipRule="evenodd"
             />
           </svg>
-          <div>
+          <div className="">
             <p className="text-base font-medium dark:text-slate-50">
               {conversation.ChatMember[0].user.name}
             </p>
