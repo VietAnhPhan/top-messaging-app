@@ -38,7 +38,6 @@ const Conversation = ({ conversation, userIds }) => {
 
     const chatUser = await chatUserRes.json();
 
-    // userContext.handleCurrentConversation(currentConversation);
     userContext.handleSelectUser(chatUser, currentConversation);
 
     if (

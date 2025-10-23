@@ -1,12 +1,17 @@
 import { useContext, useRef } from "react";
-import { SupabaseContext, UserContext } from "../../../Context";
+import {
+  ConversationContext,
+  SupabaseContext,
+  UserContext,
+} from "../../../Context";
 
 const ChatInput = () => {
   const userContext = useContext(UserContext);
+  const conversationContext = useContext(ConversationContext);
 
   const supabaseContext = useContext(SupabaseContext);
 
-  let currentConversation = userContext.currentConversation;
+  let currentConversation = conversationContext.currentConversation;
   let updatedConversation = null;
 
   const imageUploadedContainerRef = useRef(null);
@@ -24,13 +29,9 @@ const ChatInput = () => {
     if (image.name) {
       const { data, error } = await supabaseContext.storage
         .from("messages")
-        .upload(
-          `conversation_${userContext.loaderData.currentConversation.id}/${image.name}`,
-          image,
-          {
-            upsert: true,
-          }
-        );
+        .upload(`conversation_${currentConversation.id}/${image.name}`, image, {
+          upsert: true,
+        });
 
       if (data) {
         console.log(data);
@@ -73,7 +74,7 @@ const ChatInput = () => {
 
       if (rs.ok) {
         const message = await rs.json();
-
+        console.log(message);
         if (!currentConversation) {
           const currentConversationRes = await fetch(
             `http://localhost:3000/conversations?userIds=${userContext.id},${userContext.chatUser.id}`,
@@ -92,7 +93,7 @@ const ChatInput = () => {
           updatedConversation.messages.push(message);
         }
 
-        userContext.setCurrentConversation(updatedConversation);
+        conversationContext.setCurrentConversation(updatedConversation);
       }
     } catch (error) {
       console.log(error);
