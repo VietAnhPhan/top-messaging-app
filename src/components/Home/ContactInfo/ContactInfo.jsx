@@ -14,12 +14,12 @@ const ContactInfo = ({ currentContact }) => {
       const rs = await fetch("http://localhost:3000/friendrequests", {
         method: "POST",
         body: JSON.stringify({
-          senderId: userContext.loaderData.id,
+          senderId: userContext.id,
           receiverId: currentContact.id,
         }),
         headers: {
           "Content-type": "application/json",
-          Authorization: `bearer ${userContext.loaderData.token}`,
+          Authorization: `bearer ${userContext.token}`,
         },
       });
 

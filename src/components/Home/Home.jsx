@@ -60,7 +60,7 @@ function Home(props) {
       `http://localhost:3000/users?contact=${e.target.value}&search=true`,
       {
         method: "GET",
-        headers: { Authorization: `bearer ${loaderData.token}` },
+        headers: { Authorization: `bearer ${loaderData.user.token}` },
       }
     );
 
@@ -77,10 +77,11 @@ function Home(props) {
     setchatUser(user);
     setCurrentConversation(conversation);
   }
- 
+
   return (
     <UserContext
       value={{
+        ...loaderData.user,
         loaderData,
         handleCurrentConversation,
         handleSentMessage,

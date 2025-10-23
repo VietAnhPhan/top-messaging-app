@@ -72,6 +72,7 @@ async function homeLoader({ context }) {
   const conversations = await getConversations(user.id);
   let chatUser = null;
   let currentConversation = null;
+
   if (conversations.length > 0) {
     currentConversation = await getCurrentConversation(
       conversations[0].userIds
@@ -79,11 +80,18 @@ async function homeLoader({ context }) {
     chatUser = await getChatUser(currentConversation.id, user.id);
   }
 
-  user.conversations = conversations;
-  user.currentConversation = currentConversation;
-  user.chatUser = chatUser;
+  // user.conversations = conversations;
+  // user.currentConversation = currentConversation;
+  // user.chatUser = chatUser;
 
-  return user;
+  const data = {
+    user,
+    conversations,
+    currentConversation,
+    chatUser,
+  };
+
+  return data;
 }
 
 async function friendsLoader({ context }) {

@@ -56,7 +56,7 @@ const ChatInput = () => {
     try {
       const lastMessage = {
         message: message,
-        userId: userContext.loaderData.id,
+        userId: userContext.id,
         chatUserId: userContext.chatUser.id,
         filePath: filePath,
         fileType: fileType,
@@ -67,7 +67,7 @@ const ChatInput = () => {
         body: JSON.stringify(lastMessage),
         headers: {
           "Content-type": "application/json",
-          Authorization: `bearer ${userContext.loaderData.token}`,
+          Authorization: `bearer ${userContext.token}`,
         },
       });
 
@@ -76,11 +76,11 @@ const ChatInput = () => {
 
         if (!currentConversation) {
           const currentConversationRes = await fetch(
-            `http://localhost:3000/conversations?userIds=${userContext.loaderData.id},${userContext.chatUser.id}`,
+            `http://localhost:3000/conversations?userIds=${userContext.id},${userContext.chatUser.id}`,
             {
               method: "GET",
               headers: {
-                Authorization: `bearer ${userContext.loaderData.token}`,
+                Authorization: `bearer ${userContext.token}`,
               },
             }
           );

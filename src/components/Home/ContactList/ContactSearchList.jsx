@@ -5,14 +5,12 @@ const ContactSearchList = ({ contacts }) => {
   const userContext = useContext(UserContext);
 
   async function handleSelect(contact) {
-    console.log(userContext.loaderData.id, contact.id);
-
     const rs = await fetch(
-      `http://localhost:3000/conversations?userIds=${userContext.loaderData.id},${contact.id}`,
+      `http://localhost:3000/conversations?userIds=${userContext.id},${contact.id}`,
       {
         method: "GET",
         headers: {
-          Authorization: `bearer ${userContext.loaderData.token}`,
+          Authorization: `bearer ${userContext.token}`,
         },
       }
     );

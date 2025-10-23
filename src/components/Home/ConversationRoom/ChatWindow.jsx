@@ -11,7 +11,7 @@ const ChatWindow = ({ currentConversation }) => {
         {currentConversation &&
           currentConversation.messages.length > 0 &&
           currentConversation.messages.map((message) => {
-            if (message.userId === userContext.loaderData.id) {
+            if (message.userId === userContext.id) {
               return <MyMessage key={message.id} message={message}></MyMessage>;
             } else
               return (

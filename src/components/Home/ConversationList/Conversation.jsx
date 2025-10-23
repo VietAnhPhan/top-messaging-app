@@ -19,7 +19,7 @@ const Conversation = ({ conversation, userIds }) => {
       {
         method: "GET",
         headers: {
-          Authorization: `bearer ${userContext.loaderData.token}`,
+          Authorization: `bearer ${userContext.token}`,
         },
       }
     );
@@ -27,11 +27,11 @@ const Conversation = ({ conversation, userIds }) => {
     const currentConversation = await rs.json();
 
     const chatUserRes = await fetch(
-      `http://localhost:3000/users?conversation_id=${currentConversation.id}&auth_id=${userContext.loaderData.id}`,
+      `http://localhost:3000/users?conversation_id=${currentConversation.id}&auth_id=${userContext.id}`,
       {
         method: "GET",
         headers: {
-          Authorization: `bearer ${userContext.loaderData.token}`,
+          Authorization: `bearer ${userContext.token}`,
         },
       }
     );
