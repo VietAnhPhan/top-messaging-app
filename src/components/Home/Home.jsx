@@ -77,7 +77,7 @@ function Home(props) {
     setchatUser(user);
     setCurrentConversation(conversation);
   }
-  console.log(currentConversation);
+ 
   return (
     <UserContext
       value={{

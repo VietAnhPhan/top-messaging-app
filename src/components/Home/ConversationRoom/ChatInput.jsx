@@ -6,8 +6,7 @@ const ChatInput = () => {
 
   const supabaseContext = useContext(SupabaseContext);
 
-  // const [message, setMessage] = useState("");
-  let currentConversation = { ...userContext.loaderData.currentConversation };
+  let currentConversation = userContext.currentConversation;
 
   const imageUploadedContainerRef = useRef(null);
   const imageUploadedRef = useRef(null);
@@ -19,8 +18,6 @@ const ChatInput = () => {
     let filePath = "";
     let fileType = "";
 
-    // console.log(image.type);
-    // return;
     if (message === "" && image.name === "") return;
 
     if (image.name) {
@@ -57,7 +54,6 @@ const ChatInput = () => {
 
     try {
       const lastMessage = {
-        conversationId: currentConversation.id,
         message: message,
         userId: userContext.loaderData.id,
         chatUserId: userContext.chatUser.id,
@@ -83,18 +79,22 @@ const ChatInput = () => {
             {
               method: "GET",
               headers: {
-                Authorization: `bearer ${userContext.token}`,
+                Authorization: `bearer ${userContext.loaderData.token}`,
               },
             }
           );
+
           currentConversation = await currentConversationRes.json();
+          console.log(currentConversation);
         }
 
-        console.log(currentConversation.messages);
-        const updatedMessages = [...currentConversation.messages, message];
+        // const updatedMessages = [...currentConversation.messages, message];
 
-        currentConversation.messages = updatedMessages;
-        userContext.handleSentMessage(currentConversation);
+        const updatedConversation = { ...currentConversation };
+
+        updatedConversation.messages.push(message);
+
+        userContext.setCurrentConversation(updatedConversation);
       }
     } catch (error) {
       console.log(error);
