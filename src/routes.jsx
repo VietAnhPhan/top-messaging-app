@@ -7,6 +7,7 @@ import Profile from "./components/Profile/Profile";
 import { UserContext } from "./Context";
 import Setting from "./components/Setting";
 import Friend from "./components/Home/Friend";
+import Wrapper from "./components/Wrapper";
 
 const router = createBrowserRouter([
   {
@@ -24,22 +25,28 @@ const router = createBrowserRouter([
       {
         path: "/profile",
         loader: dataLoader,
-        element: <Profile />,
-      },
-      {
-        path: "/your-posts",
-      },
-      {
-        path: "/new-post",
+        element: (
+          <Wrapper>
+            <Profile />
+          </Wrapper>
+        ),
       },
       {
         path: "/settings",
-        element: <Setting></Setting>,
+        element: (
+          <Wrapper>
+            <Setting></Setting>
+          </Wrapper>
+        ),
       },
       {
         path: "/friends",
         loader: friendsLoader,
-        element: <Friend></Friend>,
+        element: (
+          <Wrapper>
+            <Friend></Friend>
+          </Wrapper>
+        ),
       },
     ],
   },

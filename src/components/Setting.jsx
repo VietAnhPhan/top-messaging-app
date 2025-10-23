@@ -8,7 +8,7 @@ const Setting = () => {
     navigate("/");
   }
   return (
-    <div className="md:grid md:grid-cols-3 flex-1 overflow-y-auto p-8">
+    <div className="md:grid md:grid-cols-3 flex-1 overflow-y-auto">
       <div className="flex flex-col gap-y-4">
         <p className="dark:text-gray-50 text-2xl">Settings</p>
         <ul>

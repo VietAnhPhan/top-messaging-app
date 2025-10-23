@@ -239,7 +239,7 @@ const Profile = () => {
           ) : (
             <button
               type="submit"
-              className="mt-5 text-white flex-1 bg-gray-500 p-2 hover:cursor-pointer"
+              className="mt-5 text-slate-900 flex-1 bg-gray-300 p-2 hover:cursor-pointer"
               disabled
             >
               Update
@@ -259,7 +259,7 @@ const Profile = () => {
             <button
               type="button"
               className={
-                "mt-5 bg-blue-700 text-white flex-1 hover:cursor-pointer"
+                "mt-5 bg-green-600 text-white flex-1 hover:cursor-pointer"
               }
               onClick={handleEdit}
             >
