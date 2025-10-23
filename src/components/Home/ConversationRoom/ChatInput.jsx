@@ -7,6 +7,7 @@ const ChatInput = () => {
   const supabaseContext = useContext(SupabaseContext);
 
   let currentConversation = userContext.currentConversation;
+  let updatedConversation = null;
 
   const imageUploadedContainerRef = useRef(null);
   const imageUploadedRef = useRef(null);
@@ -85,14 +86,11 @@ const ChatInput = () => {
           );
 
           currentConversation = await currentConversationRes.json();
-          console.log(currentConversation);
+          updatedConversation = { ...currentConversation };
+        } else {
+          updatedConversation = { ...currentConversation };
+          updatedConversation.messages.push(message);
         }
-
-        // const updatedMessages = [...currentConversation.messages, message];
-
-        const updatedConversation = { ...currentConversation };
-
-        updatedConversation.messages.push(message);
 
         userContext.setCurrentConversation(updatedConversation);
       }
