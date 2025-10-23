@@ -7,7 +7,7 @@ const ChatInput = () => {
   const supabaseContext = useContext(SupabaseContext);
 
   // const [message, setMessage] = useState("");
-  const currentConversation = { ...userContext.loaderData.currentConversation };
+  let currentConversation = { ...userContext.loaderData.currentConversation };
 
   const imageUploadedContainerRef = useRef(null);
   const imageUploadedRef = useRef(null);
@@ -76,10 +76,22 @@ const ChatInput = () => {
 
       if (rs.ok) {
         const message = await rs.json();
-        const updatedMessages = [
-          ...userContext.loaderData.currentConversation.messages,
-          message,
-        ];
+
+        if (!currentConversation) {
+          const currentConversationRes = await fetch(
+            `http://localhost:3000/conversations?userIds=${userContext.loaderData.id},${userContext.chatUser.id}`,
+            {
+              method: "GET",
+              headers: {
+                Authorization: `bearer ${userContext.token}`,
+              },
+            }
+          );
+          currentConversation = await currentConversationRes.json();
+        }
+
+        console.log(currentConversation.messages);
+        const updatedMessages = [...currentConversation.messages, message];
 
         currentConversation.messages = updatedMessages;
         userContext.handleSentMessage(currentConversation);

@@ -13,7 +13,7 @@ const Conversation = ({ conversation, userIds }) => {
     "/" +
     lastTime.getFullYear();
 
-  async function handleClick() {
+  async function handleSelect() {
     const rs = await fetch(
       `http://localhost:3000/conversations?userIds=${userIds}`,
       {
@@ -38,10 +38,8 @@ const Conversation = ({ conversation, userIds }) => {
 
     const chatUser = await chatUserRes.json();
 
-    console.log(chatUser);
-
-    userContext.handleCurrentConversation(currentConversation);
-    userContext.handlechatUser(chatUser);
+    // userContext.handleCurrentConversation(currentConversation);
+    userContext.handleSelectUser(chatUser, currentConversation);
 
     if (
       !userContext.screen.isChatWindow ||
@@ -53,7 +51,10 @@ const Conversation = ({ conversation, userIds }) => {
   }
 
   return (
-    <div className="p-4 hover:bg-zinc-200/50 dark:hover:bg-slate-800" onClick={handleClick}>
+    <div
+      className="p-4 hover:bg-zinc-200/50 dark:hover:bg-slate-800"
+      onClick={handleSelect}
+    >
       <div className="flex justify-between">
         <div className="flex items-center gap-x-3">
           <svg

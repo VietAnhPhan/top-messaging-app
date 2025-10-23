@@ -4,7 +4,7 @@ import { UserContext } from "../../../Context";
 const ContactInfo = ({ currentContact }) => {
   const userContext = useContext(UserContext);
   const [isSent, setisSent] = useState(false);
-  console.log(currentContact)
+
   useEffect(() => {
     async function fetchFriendRequest() {}
   });
@@ -55,8 +55,12 @@ const ContactInfo = ({ currentContact }) => {
               clipRule="evenodd"
             />
           </svg>
-          <p className="dark:text-gray-50">{currentContact ? currentContact.name : ""}</p>
-          <p className="dark:text-gray-50">@{currentContact ? currentContact.username : ""}</p>
+          <p className="dark:text-gray-50">
+            {currentContact ? currentContact.name : ""}
+          </p>
+          <p className="dark:text-gray-50">
+            @{currentContact ? currentContact.username : ""}
+          </p>
 
           {/* Add friend */}
           <div className="mt-8 hover:cursor-pointer">
@@ -102,7 +106,6 @@ const ContactInfo = ({ currentContact }) => {
               </div>
             )}
           </div>
-          
         </div>
       </div>
       <p>About</p>

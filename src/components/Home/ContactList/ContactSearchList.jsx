@@ -19,8 +19,9 @@ const ContactSearchList = ({ contacts }) => {
 
     const currentConversation = await rs.json();
 
-    userContext.handleCurrentConversation(currentConversation);
-    userContext.handlechatUser(contact);
+    // userContext.handleCurrentConversation(currentConversation);
+    userContext.handleSelectUser(contact, currentConversation);
+    // userContext.setCurrentConversation(currentConversation);
 
     if (
       !userContext.screen.isChatWindow ||
