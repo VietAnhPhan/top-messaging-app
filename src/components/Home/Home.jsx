@@ -4,7 +4,6 @@ import ConversationList from "./ConversationList/ConversationList";
 import ContactSearchList from "./ContactList/ContactSearchList";
 import ContactInfo from "./ContactInfo/ContactInfo";
 import { ConversationContext, UserContext } from "../../Context";
-import ChatInput from "./ConversationRoom/ChatInput";
 import ChatWindow from "./ConversationRoom/ChatWindow";
 
 function Home(props) {
@@ -232,63 +231,10 @@ function Home(props) {
               isOpenContactInfo ? "col-span-1" : "col-span-2"
             } row-span-1 flex flex-col overflow-auto dark:bg-slate-900 relative`}
           >
-            {/* Current friend */}
-            <div className="flex dark:bg-slate-900">
-              <button
-                className="md:hidden px-3"
-                onClick={handleBacktoConversation}
-              >
-                <svg
-                  className="w-6 h-6 text-gray-800 dark:text-gray-50"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M5 12h14M5 12l4-4m-4 4 4 4"
-                  />
-                </svg>
-              </button>
-              <div
-                className="flex items-center px-3 py-2"
-                onClick={handleOpenContactInfo}
-              >
-                <div className="hover:cursor-pointer flex items-center gap-x-3">
-                  <svg
-                    className="w-9 h-9 text-gray-800 dark:text-gray-50 hover:cursor-pointer"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M12 20a7.966 7.966 0 0 1-5.002-1.756l.002.001v-.683c0-1.794 1.492-3.25 3.333-3.25h3.334c1.84 0 3.333 1.456 3.333 3.25v.683A7.966 7.966 0 0 1 12 20ZM2 12C2 6.477 6.477 2 12 2s10 4.477 10 10c0 5.5-4.44 9.963-9.932 10h-.138C6.438 21.962 2 17.5 2 12Zm10-5c-1.84 0-3.333 1.455-3.333 3.25S10.159 13.5 12 13.5c1.84 0 3.333-1.455 3.333-3.25S13.841 7 12 7Z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                  <p className="dark:text-gray-50">
-                    {chatUser && chatUser.name}
-                  </p>
-                </div>
-              </div>
-            </div>
-            {/* Chat window */}
-
-            <ChatWindow currentConversation={currentConversation}></ChatWindow>
-
-            {/* Chat input */}
-
-            <ChatInput></ChatInput>
+            <ChatWindow
+              chatUser={chatUser}
+              controls={{ handleBacktoConversation, handleOpenContactInfo }}
+            ></ChatWindow>
           </div>
         )}
 
