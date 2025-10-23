@@ -53,7 +53,7 @@ const Conversation = ({ conversation, userIds }) => {
   }
 
   return (
-    <div className="p-4 hover:bg-slate-800" onClick={handleClick}>
+    <div className="p-4 hover:bg-zinc-200/50 dark:hover:bg-slate-800" onClick={handleClick}>
       <div className="flex justify-between">
         <div className="flex items-center gap-x-3">
           <svg

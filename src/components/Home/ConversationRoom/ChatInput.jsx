@@ -60,6 +60,7 @@ const ChatInput = () => {
         conversationId: currentConversation.id,
         message: message,
         userId: userContext.loaderData.id,
+        chatUserId: userContext.chatUser.id,
         filePath: filePath,
         fileType: fileType,
       };

@@ -4,7 +4,7 @@ import { Link } from "react-router";
 
 export const Header = ({ loaderData }) => {
   return (
-    <header className="flex md:flex-col justify-between items-center dark:bg-slate-800 md:py-8 px-3 border-r-[1px] border-r-slate-700 ">
+    <header className="flex md:flex-col justify-between items-center bg-zinc-100 dark:bg-slate-800 md:py-8 px-3 border-r-[1px] border-r-zinc-300 dark:border-r-slate-700">
       <div className="flex flex-col gap-y-3">
         <Link to="/">
           <svg
@@ -43,7 +43,7 @@ export const Header = ({ loaderData }) => {
         </Link>
       </div>
 
-      <div className="flex flex-col gap-y-3">
+      <div className="flex flex-col items-center gap-y-3">
         <Link to="/settings">
           <svg
             className="w-8 h-8 text-gray-800 dark:text-white"
@@ -64,7 +64,7 @@ export const Header = ({ loaderData }) => {
           </svg>
         </Link>
         <div className="flex md:block">
-          <Link className="col-start-1 flex md:block" to="/profile">
+          <Link to="/profile" className="col-start-1 flex md:block">
             {loaderData.avatarPath ? (
               <div
                 className="w-7 h-7 bg-cover rounded-[50%]"

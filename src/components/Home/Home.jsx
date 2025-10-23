@@ -84,6 +84,7 @@ function Home(props) {
         handleCurrentConversation,
         handleSentMessage,
         handlechatUser,
+        chatUser,
         screen: {
           isChatWindow,
           setIsChatWindow,
@@ -95,7 +96,7 @@ function Home(props) {
       <title>{`Homepage | ${props.sitename}`}</title>
       {/* Column 1*/}
       {isConversationList && (
-        <div className="md:col-span-1 md:flex flex-col border-r-[1px] border-r-slate-700 dark:bg-slate-900">
+        <div className="md:col-span-1 md:flex flex-col border-r-[1px] border-r-zinc-300 dark:border-r-slate-700 dark:bg-slate-900">
           {/* Profile header*/}
           <div className="px-4">
             <img src="/logo-1024x200.png" alt="" className="w-52 pt-3 pb-4" />
@@ -171,7 +172,7 @@ function Home(props) {
                     clipRule="evenodd"
                   />
                 </svg>
-                <p className="dark:text-gray-50">{chatUser.name}</p>
+                <p className="dark:text-gray-50">{chatUser && chatUser.name}</p>
               </div>
             </div>
           </div>
@@ -187,11 +188,7 @@ function Home(props) {
 
       {/* Column 3 */}
       {isOpenContactInfo && (
-        <div className="border-[1px] border-[#DADADA] bg-[#EDEDED] py-4 px-6 gap-x-4">
-          <ContactInfo
-            currentContact={chatUser ? chatUser : null}
-          ></ContactInfo>
-        </div>
+        <ContactInfo currentContact={chatUser ? chatUser : null}></ContactInfo>
       )}
     </UserContext>
   );

@@ -4,7 +4,7 @@ import { UserContext } from "../../../Context";
 const ContactInfo = ({ currentContact }) => {
   const userContext = useContext(UserContext);
   const [isSent, setisSent] = useState(false);
-
+  console.log(currentContact)
   useEffect(() => {
     async function fetchFriendRequest() {}
   });
@@ -36,12 +36,12 @@ const ContactInfo = ({ currentContact }) => {
   }
 
   return (
-    <>
-      <p>Contact info</p>
+    <div className="border-l-[1px] border-l-zinc-300 dark:border-l-slate-700 py-4 px-6 gap-x-4 dark:bg-slate-900">
+      <p className="dark:text-gray-50">Contact info</p>
       <div className="flex justify-center mt-10">
         <div className="flex flex-col items-center">
           <svg
-            className="w-[150px] h-[150px] text-gray-800 hover:cursor-pointer"
+            className="w-[150px] h-[150px] text-gray-800 hover:cursor-pointer dark:text-gray-50"
             aria-hidden="true"
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -55,7 +55,8 @@ const ContactInfo = ({ currentContact }) => {
               clipRule="evenodd"
             />
           </svg>
-          <p>{currentContact ? currentContact.name : ""}</p>
+          <p className="dark:text-gray-50">{currentContact ? currentContact.name : ""}</p>
+          <p className="dark:text-gray-50">@{currentContact ? currentContact.username : ""}</p>
 
           {/* Add friend */}
           <div className="mt-8 hover:cursor-pointer">
@@ -101,9 +102,12 @@ const ContactInfo = ({ currentContact }) => {
               </div>
             )}
           </div>
+          
         </div>
       </div>
-    </>
+      <p>About</p>
+      <p>{currentContact && currentContact.about}</p>
+    </div>
   );
 };
 

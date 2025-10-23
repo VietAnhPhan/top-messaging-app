@@ -6,7 +6,7 @@ const ChatWindow = ({ currentConversation }) => {
   const userContext = useContext(UserContext);
 
   return (
-    <div className="border-0 border-[#DADADA] dark:bg-slate-900 opacity-95 relative overflow-auto flex-1">
+    <div className="bg-rose-100/50 dark:bg-slate-900 opacity-95 relative overflow-auto flex-1">
       <div className="px-13">
         {currentConversation &&
           currentConversation.messages.length > 0 &&
@@ -22,7 +22,7 @@ const ChatWindow = ({ currentConversation }) => {
               );
           })}
       </div>
-      <div className="bg-[url(/m5BEg2K4OR4.png)] w-full h-full opacity-8 absolute top-0"></div>
+      <div className="bg-[url(/bg-chat-room.png)] dark:bg-[url(/m5BEg2K4OR4.png)] w-full h-full opacity-10 dark:opacity-8 absolute top-0"></div>
     </div>
   );
 };
