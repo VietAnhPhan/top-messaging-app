@@ -1,14 +1,14 @@
 import "./Login.css";
 import logoImage from "/logo-landscape.png";
-// import { userContext } from "../../Context";
 import { ErrorBoundary } from "react-error-boundary";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router";
+import api from "../../api";
 
 function Login(props) {
   const [username, setUsername] = useState("");
   const [authResults, setAuthResults] = useState("");
-  // const auth = useContext(userContext);
+
   let navigate = useNavigate();
 
   function typingUsername(e) {
@@ -19,21 +19,11 @@ function Login(props) {
     const password = formData.get("password");
 
     try {
-      const response = await fetch("http://localhost:3000/auth/login", {
-        method: "POST",
-        body: JSON.stringify({ username: username, password: password }),
-        headers: {
-          "Content-type": "application/json",
-        },
-      });
-
-      const result = await response.json();
+      const result = await api.login(username, password);
       if (result.info) {
         setAuthResults(result.info.message);
         return;
       }
-
-      // auth.setToken(result.token);
 
       localStorage.setItem(
         "messaging_app_access",
@@ -127,7 +117,7 @@ function Login(props) {
               Login
             </button>
             <p className="text-center">Or</p>{" "}
-            <Link className="text-center" to="/signup">
+            <Link className="text-center" to="/sign-up">
               Sign up with email
             </Link>
           </form>

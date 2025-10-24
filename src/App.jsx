@@ -15,14 +15,14 @@ function App() {
   const loaderData = useLoaderData();
   return (
     <>
-      <SupabaseContext value={supabase}>
-        <div className="flex flex-col-reverse md:flex-row h-full dark:bg-slate-900">
-          <Header loaderData={loaderData}></Header>
-          <div className="grid grid-cols-1 md:grid-cols-[30%_45%_25%] h-full flex-1">
+      <div className="flex flex-col-reverse md:flex-row h-full dark:bg-slate-900">
+        <Header loaderData={loaderData}></Header>
+        <div className="grid grid-cols-1 md:grid-cols-[30%_45%_25%] h-full flex-1">
+          <SupabaseContext value={supabase}>
             <Outlet></Outlet>
-          </div>
+          </SupabaseContext>
         </div>
-      </SupabaseContext>
+      </div>
     </>
   );
 }

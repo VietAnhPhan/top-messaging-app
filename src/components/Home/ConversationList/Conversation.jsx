@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { UserContext } from "../../../Context";
+import api from "../../../api";
 
 const Conversation = ({ conversation, userIds }) => {
   const userContext = useContext(UserContext);
@@ -14,29 +15,16 @@ const Conversation = ({ conversation, userIds }) => {
     lastTime.getFullYear();
 
   async function handleSelect() {
-    const rs = await fetch(
-      `http://localhost:3000/conversations?userIds=${userIds}`,
-      {
-        method: "GET",
-        headers: {
-          Authorization: `bearer ${userContext.token}`,
-        },
-      }
+    const currentConversation = await api.getCurrentConversation(
+      userIds,
+      userContext.token
     );
 
-    const currentConversation = await rs.json();
-
-    const chatUserRes = await fetch(
-      `http://localhost:3000/users?conversation_id=${currentConversation.id}&auth_id=${userContext.id}`,
-      {
-        method: "GET",
-        headers: {
-          Authorization: `bearer ${userContext.token}`,
-        },
-      }
+    const chatUser = await api.getChatUser(
+      currentConversation.id,
+      userContext.id,
+      userContext.token
     );
-
-    const chatUser = await chatUserRes.json();
 
     userContext.handleSelectUser(chatUser, currentConversation);
 

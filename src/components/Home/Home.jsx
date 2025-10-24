@@ -5,6 +5,7 @@ import ContactSearchList from "./ContactList/ContactSearchList";
 import ContactInfo from "./ContactInfo/ContactInfo";
 import { ConversationContext, UserContext } from "../../Context";
 import ChatWindow from "./ConversationRoom/ChatWindow";
+import api from "../../api";
 
 function Home(props) {
   const loaderData = useLoaderData();
@@ -47,15 +48,11 @@ function Home(props) {
       setContacts([]);
       return;
     }
-    const rs = await fetch(
-      `http://localhost:3000/users?contact=${e.target.value}&search=true`,
-      {
-        method: "GET",
-        headers: { Authorization: `bearer ${loaderData.user.token}` },
-      }
-    );
 
-    const contacts = await rs.json();
+    const contacts = await api.getSearchContact(
+      e.target.value,
+      loaderData.user.token
+    );
     setContacts(contacts);
   }
 

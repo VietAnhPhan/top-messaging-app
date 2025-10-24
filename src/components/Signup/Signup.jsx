@@ -3,6 +3,7 @@ import logoImage from "/logo-landscape.png";
 import { ErrorBoundary } from "react-error-boundary";
 import { useState } from "react";
 import { useNavigate } from "react-router";
+import api from "../../api";
 
 function Signup(props) {
   const [username, setUsername] = useState("");
@@ -40,22 +41,16 @@ function Signup(props) {
     const fullname = formData.get("fullname");
     const email = formData.get("email");
 
-    try {
-      const response = await fetch("http://localhost:3000/auth/sign-up", {
-        method: "POST",
-        body: JSON.stringify({
-          username: username,
-          password: password,
-          repeat_password: repeatPassword,
-          name: fullname,
-          email: email,
-        }),
-        headers: {
-          "Content-type": "application/json",
-        },
-      });
+    const user = {
+      username,
+      password,
+      repeatPassword,
+      fullname,
+      email,
+    };
 
-      const result = await response.json();
+    try {
+      const result = await api.signUp(user);
       if (result.errors && result.errors.length > 0) {
         setAuthResults(result);
       }

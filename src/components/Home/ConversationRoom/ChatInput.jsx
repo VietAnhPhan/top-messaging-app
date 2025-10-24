@@ -4,6 +4,7 @@ import {
   SupabaseContext,
   UserContext,
 } from "../../../Context";
+import api from "../../../api";
 
 const ChatInput = () => {
   const userContext = useContext(UserContext);
@@ -76,17 +77,10 @@ const ChatInput = () => {
         const message = await rs.json();
         console.log(message);
         if (!currentConversation) {
-          const currentConversationRes = await fetch(
-            `http://localhost:3000/conversations?userIds=${userContext.id},${userContext.chatUser.id}`,
-            {
-              method: "GET",
-              headers: {
-                Authorization: `bearer ${userContext.token}`,
-              },
-            }
+          currentConversation = await api.getCurrentConversation(
+            [userContext.id, userContext.chatUser.id],
+            userContext.token
           );
-
-          currentConversation = await currentConversationRes.json();
           updatedConversation = { ...currentConversation };
         } else {
           updatedConversation = { ...currentConversation };

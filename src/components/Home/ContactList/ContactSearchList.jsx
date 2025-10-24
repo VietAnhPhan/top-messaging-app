@@ -1,21 +1,15 @@
 import { useContext } from "react";
 import { UserContext } from "../../../Context";
+import api from "../../../api";
 
 const ContactSearchList = ({ contacts }) => {
   const userContext = useContext(UserContext);
 
   async function handleSelect(contact) {
-    const rs = await fetch(
-      `http://localhost:3000/conversations?userIds=${userContext.id},${contact.id}`,
-      {
-        method: "GET",
-        headers: {
-          Authorization: `bearer ${userContext.token}`,
-        },
-      }
+    const currentConversation = await api.getCurrentConversation(
+      [userContext.id, contact.id],
+      userContext.token
     );
-
-    const currentConversation = await rs.json();
 
     userContext.handleSelectUser(contact, currentConversation);
 

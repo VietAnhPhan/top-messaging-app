@@ -8,6 +8,7 @@ import { UserContext } from "./Context";
 import Setting from "./components/Setting";
 import Friend from "./components/Home/Friend";
 import Wrapper from "./components/Wrapper";
+import api from "./api";
 
 const router = createBrowserRouter([
   {
@@ -55,13 +56,17 @@ const router = createBrowserRouter([
     element: <Login sitename="ReactJS template" />,
   },
   {
-    path: "/signup",
+    path: "/sign-up",
     element: <Signup sitename="ReactJS template" />,
   },
 ]);
 
 async function authMiddleware({ context }) {
-  const user = await getUser();
+  const access = JSON.parse(localStorage.getItem("messaging_app_access"));
+
+  if (!access) throw redirect("/login");
+
+  const user = await api.getUser(access.username, access.token);
 
   if (!user) throw redirect("/login");
 
@@ -76,15 +81,20 @@ function dataLoader({ context }) {
 
 async function homeLoader({ context }) {
   const user = context.get(UserContext);
-  const conversations = await getConversations(user.id);
+  const conversations = await api.getConversations(user.id, user.token);
   let chatUser = null;
   let currentConversation = null;
 
   if (conversations.length > 0) {
-    currentConversation = await getCurrentConversation(
-      conversations[0].userIds
+    currentConversation = await api.getCurrentConversation(
+      conversations[0].userIds,
+      user.token
     );
-    chatUser = await getChatUser(currentConversation.id, user.id);
+    chatUser = await api.getChatUser(
+      currentConversation.id,
+      user.id,
+      user.token
+    );
   }
 
   // user.conversations = conversations;
@@ -103,114 +113,13 @@ async function homeLoader({ context }) {
 
 async function friendsLoader({ context }) {
   const user = context.get(UserContext);
-  const sentRequests = await getSentRequest(user);
+  const sentRequests = await api.getSentRequest(user.id, user.token);
 
   const friends = {
     sentRequests,
   };
 
   return friends;
-}
-
-async function getUser() {
-  try {
-    const access = JSON.parse(localStorage.getItem("messaging_app_access"));
-    const rs = await fetch(
-      `http://localhost:3000/users?username=${access.username}`,
-      {
-        method: "GET",
-        headers: {
-          Authorization: `bearer ${access.token}`,
-        },
-      }
-    );
-
-    const user = await rs.json();
-    user.token = access.token;
-    return user;
-  } catch (err) {
-    console.log(err);
-  }
-}
-
-async function getConversations(userId) {
-  try {
-    const access = JSON.parse(localStorage.getItem("messaging_app_access"));
-    const rs = await fetch(
-      `http://localhost:3000/conversations?userId=${userId}`,
-      {
-        method: "GET",
-        headers: {
-          Authorization: `bearer ${access.token}`,
-        },
-      }
-    );
-
-    const conversations = await rs.json();
-
-    return conversations;
-  } catch (err) {
-    console.log(err);
-  }
-}
-
-async function getCurrentConversation(userIds) {
-  try {
-    const access = JSON.parse(localStorage.getItem("messaging_app_access"));
-    const currentConversationRes = await fetch(
-      `http://localhost:3000/conversations?userIds=${userIds}`,
-      {
-        method: "GET",
-        headers: {
-          Authorization: `bearer ${access.token}`,
-        },
-      }
-    );
-    const currentConversation = await currentConversationRes.json();
-
-    return currentConversation;
-  } catch (err) {
-    console.log(err);
-  }
-}
-
-async function getChatUser(conversationId, authId) {
-  try {
-    const access = JSON.parse(localStorage.getItem("messaging_app_access"));
-    const chatUserRes = await fetch(
-      `http://localhost:3000/users?conversation_id=${conversationId}&auth_id=${authId}`,
-      {
-        method: "GET",
-        headers: {
-          Authorization: `bearer ${access.token}`,
-        },
-      }
-    );
-    const chatUser = await chatUserRes.json();
-
-    return chatUser;
-  } catch (err) {
-    console.log(err);
-  }
-}
-
-async function getSentRequest(sender) {
-  try {
-    const friendReqRes = await fetch(
-      `http://localhost:3000/friendrequests?friend_request=true&sender_id=${sender.id}`,
-      {
-        method: "GET",
-        headers: {
-          Authorization: `bearer ${sender.token}`,
-        },
-      }
-    );
-    const friendrequests = await friendReqRes.json();
-
-    return friendrequests;
-  } catch (err) {
-    console.log(err);
-  }
 }
 
 export default router;
