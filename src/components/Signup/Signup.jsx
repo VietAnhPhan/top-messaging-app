@@ -45,7 +45,7 @@ function Signup(props) {
       username,
       password,
       repeatPassword,
-      fullname,
+      name:fullname,
       email,
     };
 

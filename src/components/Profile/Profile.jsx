@@ -63,7 +63,6 @@ const Profile = () => {
       }
     );
     if (response.ok) {
-      
       setIsupdate(false);
       setResult("You updated successfully!");
     }
@@ -223,7 +222,7 @@ const Profile = () => {
           <input
             type="tel"
             name="phone"
-            value={phone? phone:""}
+            value={phone ? phone : ""}
             className="dark:text-gray-50"
             onChange={(e) => setPhone(e.target.value)}
           />

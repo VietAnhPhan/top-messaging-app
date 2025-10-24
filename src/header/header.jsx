@@ -66,12 +66,13 @@ export const Header = ({ loaderData }) => {
         <div className="flex md:block">
           <Link to="/profile" className="col-start-1 flex md:block">
             {loaderData.avatarPath ? (
-              <div
-                className="w-7 h-7 bg-cover rounded-[50%]"
-                style={{
-                  backgroundImage: `url(https://bkudoqbqykfhbgcxfelw.supabase.co/storage/v1/object/public/${loaderData.avatarPath})`,
-                }}
-              ></div>
+              <div className="w-7 h-7">
+                <img
+                  className="rounded-[50%] object-cover object-top w-full h-full"
+                  src={`https://bkudoqbqykfhbgcxfelw.supabase.co/storage/v1/object/public/${loaderData.avatarPath}`}
+                  alt={`${loaderData.name}'s avatar`}
+                />
+              </div>
             ) : (
               <svg
                 className="w-[48px] h-[48px] dark:text-gray-50"
