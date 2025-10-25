@@ -1,0 +1,21 @@
+.userIncomingMessage {
+  font-weight: 500;
+}
+
+.incomingMessage {
+  font-weight: 500;
+  color: white;
+}
+
+.dateIncomingMessage {
+  font-weight: 500;
+  color: var(--color-branded);
+}
+
+.circleIncomingMessage {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background-color: var(--color-branded);
+  flex-shrink: 0;
+}
