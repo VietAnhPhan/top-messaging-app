@@ -7,6 +7,8 @@ import styles from "./Conversation.module.css";
 const Conversation = ({ conversation, userIds }) => {
   const userContext = useContext(UserContext);
   const chatUser = conversation.ChatMember[0].user;
+  const isSeen = conversation.messages[0].isSeen;
+  const chatUserId = conversation.messages[0].userId;
 
   const lastTime = new Date(conversation.messages[0].createdAt);
   const lastTimeFortmat =
@@ -44,18 +46,42 @@ const Conversation = ({ conversation, userIds }) => {
           <Avatar user={chatUser} type={"chatFrame"}></Avatar>
 
           <div className="">
-            <p className={`text-base font-medium dark:text-slate-50 ${!conversation.messages[0].isSeen && styles.userIncomingMessage}`}>
+            {/* Chat user name */}
+            <p
+              className={`text-base font-medium dark:text-slate-50 ${
+                !isSeen &&
+                chatUser.id === chatUserId &&
+                styles.userIncomingMessage
+              }`}
+            >
               {chatUser.name}
             </p>
-            <p className={`text-sm dark:text-zinc-400 ${!conversation.messages[0].isSeen && styles.incomingMessage}`}>
+            {/* Last sent message */}
+            <p
+              className={`text-sm dark:text-zinc-400 ${
+                !isSeen && chatUser.id === chatUserId && styles.incomingMessage
+              }`}
+            >
               {conversation.messages[0].message}
             </p>
           </div>
         </div>
 
         <div className="flex flex-col items-end">
-          <p className={`dark:text-zinc-400 text-sm ${!conversation.messages[0].isSeen && styles.dateIncomingMessage}`}>{lastTimeFortmat}</p>
-          {!conversation.messages[0].isSeen && (<span className={styles.circleIncomingMessage}></span>)}
+          {/* Date sent */}
+          <p
+            className={`dark:text-zinc-400 text-sm ${
+              !isSeen &&
+              chatUser.id === chatUserId &&
+              styles.dateIncomingMessage
+            }`}
+          >
+            {lastTimeFortmat}
+          </p>
+          {/* Indicated incomming message circle */}
+          {!isSeen && chatUser.id === chatUserId && (
+            <span className={styles.circleIncomingMessage}></span>
+          )}
         </div>
       </div>
     </div>

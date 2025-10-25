@@ -117,7 +117,7 @@ const Profile = () => {
                 <>
                   <svg
                     ref={avatarPlaceholderRef}
-                    className="w-36 h-36 text-gray-800 dark:text-white"
+                    className="w-50 h-50 text-gray-800 dark:text-white"
                     aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -159,6 +159,18 @@ const Profile = () => {
             id="username"
             className="p-1.5 w-full dark:text-gray-50"
             defaultValue={loaderData.username}
+          />
+        </div>
+         <div className="flex flex-col">
+          <label htmlFor="email" className="text-zinc-500">
+            Email:
+          </label>
+          <input
+            type="email"
+            name="email"
+            id="email"
+            className="p-1.5 w-full dark:text-gray-50"
+            defaultValue={loaderData.email}
             disabled
           />
         </div>
@@ -218,14 +230,14 @@ const Profile = () => {
           ></textarea>
         </div>
         <div className="flex flex-col">
-          <label htmlFor="password" className="text-zinc-500">
+          <label htmlFor="phone" className="text-zinc-500">
             Phone:
           </label>
           <input
             type="tel"
             name="phone"
             value={phone ? phone : ""}
-            className="dark:text-gray-50"
+            className="dark:text-gray-50 p-1.5"
             onChange={(e) => setPhone(e.target.value)}
           />
         </div>
