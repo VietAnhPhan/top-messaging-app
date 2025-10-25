@@ -22,8 +22,6 @@ const Conversation = ({ conversation, userIds }) => {
       userContext.token
     );
 
-    
-
     userContext.handleSelectUser(chatUser, currentConversation);
 
     if (
@@ -42,11 +40,7 @@ const Conversation = ({ conversation, userIds }) => {
     >
       <div className="flex justify-between">
         <div className="flex items-center gap-x-3">
-          <Avatar
-            user={chatUser}
-            size={{ w: 12, h: 12 }}
-            shrink={"shrink-0"}
-          ></Avatar>
+          <Avatar user={chatUser} type={"chatFrame"}></Avatar>
 
           <div className="">
             <p className="text-base font-medium dark:text-slate-50">

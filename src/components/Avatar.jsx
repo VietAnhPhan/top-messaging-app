@@ -1,8 +1,10 @@
+import styles from "./Avatar.module.css";
+
 const Avatar = (props) => {
   return (
     <>
       {props.user.avatarPath && (
-        <div className={`w-${props.size.w} h-${props.size.h} ${props.shrink}`}>
+        <div className={styles[props.type]}>
           <img
             className="object-cover object-top w-full h-full rounded-[50%]"
             src={`https://bkudoqbqykfhbgcxfelw.supabase.co/storage/v1/object/public/${props.user.avatarPath}`}
@@ -13,7 +15,7 @@ const Avatar = (props) => {
 
       {!props.user.avatarPath && (
         <svg
-          className={`w-${props.size.w} h-${props.size.h} text-gray-800 hover:cursor-pointer dark:text-gray-50`}
+          className={`${styles[props.type]} text-gray-800 hover:cursor-pointer dark:text-gray-50`}
           aria-hidden="true"
           xmlns="http://www.w3.org/2000/svg"
           width="24"

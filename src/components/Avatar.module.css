@@ -1,0 +1,15 @@
+.infoFrame {
+  width: 202px;
+  height: 202px;
+}
+
+.headerFrame {
+  width: 48px;
+  height: 48px;
+}
+
+.chatFrame {
+  width: 56px;
+  height: 56px;
+  flex-shrink: 0;
+}

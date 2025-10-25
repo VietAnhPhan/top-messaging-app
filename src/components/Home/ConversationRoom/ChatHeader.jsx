@@ -30,7 +30,7 @@ const ChatHeader = ({ chatUser, controls }) => {
         onClick={controls.handleOpenContactInfo}
       >
         <div className="hover:cursor-pointer flex items-center gap-x-5">
-          <Avatar user={chatUser} size={{ w: 10, h: 10 }}></Avatar>
+          <Avatar user={chatUser} type={"headerFrame"}></Avatar>
 
           <p className="dark:text-gray-50 font-semibold">
             {chatUser && chatUser.name}

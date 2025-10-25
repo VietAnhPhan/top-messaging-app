@@ -41,7 +41,7 @@ const ContactInfo = ({ currentContact }) => {
       <p className="dark:text-gray-50">Contact info</p>
       <div className="flex justify-center mt-10">
         <div className="flex flex-col items-center">
-          <Avatar user={currentContact} size={{ w: 45, h: 45 }}></Avatar>
+          <Avatar user={currentContact} type={"infoFrame"}></Avatar>
 
           <p className="dark:text-gray-50">
             {currentContact ? currentContact.name : ""}
