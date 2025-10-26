@@ -113,7 +113,7 @@ async function homeLoader({ context }) {
 
 async function friendsLoader({ context }) {
   const user = context.get(UserContext);
-  const sentRequests = await api.getSentRequest(user.id, user.token);
+  const sentRequests = await api.getSentRequest(user.token);
 
   const friends = {
     sentRequests,

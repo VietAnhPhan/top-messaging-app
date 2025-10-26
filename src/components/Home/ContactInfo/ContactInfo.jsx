@@ -1,39 +1,62 @@
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../../Context";
 import Avatar from "../../Avatar";
+import { UserMinus, UserRoundPlus, UserRoundX } from "lucide-react";
+import styles from "./ContactInfo.module.css";
+import api from "../../../api";
 
 const ContactInfo = ({ currentContact }) => {
   const userContext = useContext(UserContext);
-  const [isSent, setisSent] = useState(false);
+  const [requestStatus, setrequestStatus] = useState("");
 
   useEffect(() => {
-    async function fetchFriendRequest() {}
-  });
+    async function fetchInvitations() {
+      const sendingInvitations = await api.getSentRequest(userContext.token);
+      const receivingInvitations = await api.getReceivingInvitations(
+        userContext.token
+      );
 
-  async function handleSent() {
-    try {
-      const rs = await fetch("http://localhost:3000/friendrequests", {
-        method: "POST",
-        body: JSON.stringify({
-          senderId: userContext.id,
-          receiverId: currentContact.id,
-        }),
-        headers: {
-          "Content-type": "application/json",
-          Authorization: `bearer ${userContext.token}`,
-        },
+      const hasSendingInvitation = sendingInvitations.filter((sent) => {
+        if (
+          sent.receiverId === currentContact.id &&
+          sent.status === "pending"
+        ) {
+          return true;
+        }
       });
 
-      if (rs.ok) {
-        setisSent(true);
+      const hasReceivingInvitation = receivingInvitations.filter(
+        (receivingInvitation) => {
+          if (
+            receivingInvitation.senderId === currentContact.id &&
+            receivingInvitation.status === "pending"
+          ) {
+            return receivingInvitation;
+          }
+        }
+      );
+
+      if (hasSendingInvitation[0]) {
+        setrequestStatus("pending");
+      } else if (hasReceivingInvitation[0]) {
+        setrequestStatus("reject");
+      } else {
+        setrequestStatus("");
       }
-    } catch (error) {
-      console.log(error);
     }
+
+    fetchInvitations();
+  }, [currentContact.id]);
+
+  async function handleSent() {
+    await api.sendInvitation(currentContact.id, userContext.token);
+
+    setrequestStatus("pending");
   }
 
   async function handleRevoke() {
-    setisSent(false);
+    await api.revokeInvitation(currentContact.id, userContext.token);
+    setrequestStatus("");
   }
 
   return (
@@ -52,45 +75,24 @@ const ContactInfo = ({ currentContact }) => {
 
           {/* Add friend */}
           <div className="mt-8 hover:cursor-pointer">
-            {!isSent ? (
-              <div onClick={handleSent}>
-                <svg
-                  className="w-7 h-7 text-green-600"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                  onClick={handleSent}
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M9 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm-2 9a4 4 0 0 0-4 4v1a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-1a4 4 0 0 0-4-4H7Zm8-1a1 1 0 0 1 1-1h1v-1a1 1 0 1 1 2 0v1h1a1 1 0 1 1 0 2h-1v1a1 1 0 1 1-2 0v-1h-1a1 1 0 0 1-1-1Z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-                <p className="text-green-600">Add</p>
+            {requestStatus === "pending" && (
+              <div onClick={handleRevoke} className="flex gap-3 font-semibold">
+                <UserMinus className={styles.icon} />
+                <p className="text-green-500">Revoke invitation</p>
               </div>
-            ) : (
-              <div onClick={handleRevoke}>
-                <svg
-                  className="w-7 h-7 text-gray-800 dark:text-green-600"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                  onClick={handleRevoke}
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M5 8a4 4 0 1 1 8 0 4 4 0 0 1-8 0Zm-2 9a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1Zm13-6a1 1 0 1 0 0 2h4a1 1 0 1 0 0-2h-4Z"
-                    clip-rule="evenodd"
-                  />
-                </svg>
-                <p className="text-green-600">Revoke</p>
+            )}
+            {requestStatus === "" && (
+              <div onClick={handleSent} className="flex gap-3">
+                <UserRoundPlus className={styles.icon} />
+                <p className="text-green-500 font-semibold">Sent invitation</p>
+              </div>
+            )}
+            {requestStatus === "reject" && (
+              <div onClick={handleSent} className="flex gap-3">
+                <UserRoundX className={styles.icon} />
+                <p className="text-green-500 font-semibold">
+                  Reject invitation
+                </p>
               </div>
             )}
           </div>
