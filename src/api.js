@@ -194,17 +194,40 @@ const api = {
     return result;
   },
 
-  revokeInvitation: async (receiverId, token) => {
-    const response = await fetch(`http://localhost:3000/friendrequests/${receiverId}?revoke=true`, {
-      method: "PATCH",
-      body: JSON.stringify({
-        receiverId: receiverId,
-      }),
-      headers: {
-        "Content-type": "application/json",
-        Authorization: `bearer ${token}`,
-      },
-    });
+  revokeInvitation: async (id, token) => {
+    const response = await fetch(
+      `http://localhost:3000/friendrequests/${id}?revoke=true`,
+      {
+        method: "PATCH",
+
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `bearer ${token}`,
+        },
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error(`Response status: ${response.status}`);
+    }
+
+    const result = await response.json();
+
+    return result;
+  },
+
+  rejectInvitation: async (id, token) => {
+    const response = await fetch(
+      `http://localhost:3000/friendrequests/${id}?reject=true`,
+      {
+        method: "PATCH",
+
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `bearer ${token}`,
+        },
+      }
+    );
 
     if (!response.ok) {
       throw new Error(`Response status: ${response.status}`);
@@ -219,6 +242,29 @@ const api = {
     try {
       const response = await fetch(
         "http://localhost:3000/friendrequests?receiving=true",
+        {
+          method: "GET",
+          headers: {
+            Authorization: `bearer ${token}`,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`Response status: ${response.status}`);
+      }
+
+      const result = await response.json();
+      return result;
+    } catch (err) {
+      console.log(err);
+    }
+  },
+
+    getInvitation: async (chatUserId, token) => {
+    try {
+      const response = await fetch(
+        `http://localhost:3000/friendrequests?chatUserId=${chatUserId}`,
         {
           method: "GET",
           headers: {
