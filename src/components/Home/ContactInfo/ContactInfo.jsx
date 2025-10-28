@@ -75,6 +75,11 @@ const ContactInfo = ({ currentContact }) => {
     setrequestStatus("");
   }
 
+  async function handleUnfriend() {
+    await api.unfriend(friendRequest.id, currentContact.id, userContext.token);
+    setrequestStatus("");
+  }
+
   return (
     <div className="border-l-[1px] border-l-zinc-300 dark:border-l-slate-700 py-4 px-6 gap-x-4 dark:bg-slate-900">
       <p className="dark:text-gray-50">Contact info</p>
@@ -133,7 +138,7 @@ const ContactInfo = ({ currentContact }) => {
             {requestStatus === "accepted" && (
               <div className="flex gap-x-3">
                 <div
-                  onClick={handleAccept}
+                  onClick={handleUnfriend}
                   className="flex gap-3 font-semibold"
                 >
                   <UserRoundX className={styles.icon} />
