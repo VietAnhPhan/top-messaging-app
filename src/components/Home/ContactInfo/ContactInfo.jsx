@@ -18,43 +18,6 @@ const ContactInfo = ({ currentContact }) => {
 
   useEffect(() => {
     async function fetchInvitations() {
-      // const sendingInvitations = await api.getSentRequest(userContext.token);
-      // const receivingInvitations = await api.getReceivingInvitations(
-      //   userContext.token
-      // );
-
-      // const hasSendingInvitation = sendingInvitations.filter((sent) => {
-      //   if (
-      //     sent.receiverId === currentContact.id &&
-      //     sent.status === "pending"
-      //   ) {
-      //     return true;
-      //   }
-      // });
-
-      // const hasReceivingInvitation = receivingInvitations.filter(
-      //   (receivingInvitation) => {
-      //     if (
-      //       receivingInvitation.senderId === currentContact.id &&
-      //       receivingInvitation.status === "pending"
-      //     ) {
-      //       return true;
-      //     }
-      //   }
-      // );
-      // console.log(hasReceivingInvitation);
-      // if (active) {
-      //   if (hasSendingInvitation.length > 0) {
-      //     setrequestStatus("pending");
-      //     setFriendRequest(hasSendingInvitation[0]);
-      //   } else if (hasReceivingInvitation.length > 0) {
-      //     setrequestStatus("reject");
-      //     setFriendRequest(hasReceivingInvitation[0]);
-      //   } else {
-      //     setrequestStatus("");
-      //   }
-      // }
-
       if (active) {
         const invitation = await api.getInvitation(
           currentContact.id,
@@ -71,6 +34,10 @@ const ContactInfo = ({ currentContact }) => {
           !invitation
         ) {
           setrequestStatus("");
+        }
+
+        if (invitation && invitation.status === "accepted") {
+          setrequestStatus("accepted");
         }
 
         setFriendRequest(invitation);
@@ -99,6 +66,7 @@ const ContactInfo = ({ currentContact }) => {
   }
 
   async function handleAccept() {
+    await api.acceptInvitation(friendRequest.id, userContext.token);
     setrequestStatus("accepted");
   }
 
