@@ -55,6 +55,7 @@ h1 {
 button {
 }
 button:hover {
+  cursor: pointer;
   border-color: #646cff;
 }
 button:focus,

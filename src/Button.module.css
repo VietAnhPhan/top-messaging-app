@@ -1,0 +1,10 @@
+.acceptButton {
+  background-color: var(--color-branded);
+  padding: 0.5rem 2rem;
+}
+
+.rejectButton {
+  background-color: gray;
+  padding: 0.5rem 2rem;
+}
+

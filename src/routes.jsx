@@ -6,7 +6,7 @@ import Signup from "./components/Signup/Signup";
 import Profile from "./components/Profile/Profile";
 import { UserContext } from "./Context";
 import Setting from "./components/Setting";
-import Friend from "./components/Home/Friend";
+import Friend from "./components/Home/Friend/Friend";
 import Wrapper from "./components/Wrapper";
 import api from "./api";
 
@@ -114,9 +114,13 @@ async function homeLoader({ context }) {
 async function friendsLoader({ context }) {
   const user = context.get(UserContext);
   const sentRequests = await api.getSentRequest(user.token);
+  const friendList = await api.getFriends(user.token);
+  const receivingRequests = await api.getReceivingInvitations(user.token);
 
   const friends = {
     sentRequests,
+    friendList,
+    receivingRequests,
   };
 
   return friends;
