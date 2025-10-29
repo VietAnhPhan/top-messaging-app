@@ -6,6 +6,8 @@ import {
 } from "../../../Context";
 import api from "../../../api";
 
+import styles from "./ChatInput.module.css";
+
 const ChatInput = () => {
   const userContext = useContext(UserContext);
   const conversationContext = useContext(ConversationContext);
@@ -128,7 +130,7 @@ const ChatInput = () => {
   // }
 
   return (
-    <div className="py-4 px-6 gap-x-4 absolute w-full bottom-0">
+    <div className="py-4 px-6 gap-x-4 absolute w-full bottom-0 z-10">
       <form action={handleSend} className="flex gap-x-4">
         <div className="bg-white rounded-2xl flex-1 flex flex-col px-2">
           <div ref={imageUploadedContainerRef} className="justify-end hidden">

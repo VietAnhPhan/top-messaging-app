@@ -1,67 +1,25 @@
-import "./header.css";
+import { MessageSquareText, Users, Settings } from "lucide-react";
+import styles from "./header.module.css";
 
 import { Link } from "react-router";
 
 export const Header = ({ loaderData }) => {
   return (
-    <header className="flex md:flex-col justify-between items-center bg-zinc-100 dark:bg-slate-800 md:py-8 px-3 border-r-[1px] border-r-zinc-300 dark:border-r-slate-700">
+    <header className="flex md:flex-col justify-between items-center bg-zinc-100 dark:bg-slate-800 md:py-8 px-3 border-r-[1px] border-r-zinc-300 dark:border-r-slate-700 z-10">
       <div className="flex flex-col gap-y-3">
         <Link to="/">
-          <svg
-            className="w-8 h-8 dark:text-gray-50"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            fill="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              fillRule="evenodd"
-              d="M3 5.983C3 4.888 3.895 4 5 4h14c1.105 0 2 .888 2 1.983v8.923a1.992 1.992 0 0 1-2 1.983h-6.6l-2.867 2.7c-.955.899-2.533.228-2.533-1.08v-1.62H5c-1.105 0-2-.888-2-1.983V5.983Zm5.706 3.809a1 1 0 1 0-1.412 1.417 1 1 0 1 0 1.412-1.417Zm2.585.002a1 1 0 1 1 .003 1.414 1 1 0 0 1-.003-1.414Zm5.415-.002a1 1 0 1 0-1.412 1.417 1 1 0 1 0 1.412-1.417Z"
-              clipRule="evenodd"
-            />
-          </svg>
+          <div className={styles.menuIconWrapper}>
+            <MessageSquareText className={styles.menuIcon}/>
+          </div>
         </Link>
         <Link to="/friends">
-          <svg
-            className="w-8 h-8 text-gray-800 dark:text-white"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            fill="none"
-            viewBox="0 0 24 24"
-          >
-            <path
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeWidth="2"
-              d="M16 19h4a1 1 0 0 0 1-1v-1a3 3 0 0 0-3-3h-2m-2.236-4a3 3 0 1 0 0-4M3 18v-1a3 3 0 0 1 3-3h4a3 3 0 0 1 3 3v1a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1Zm8-10a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
-            />
-          </svg>
+          <Users className={styles.menuIcon} />
         </Link>
       </div>
 
       <div className="flex flex-col items-center gap-y-3">
         <Link to="/settings">
-          <svg
-            className="w-8 h-8 text-gray-800 dark:text-white"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            fill="none"
-            viewBox="0 0 24 24"
-          >
-            <path
-              stroke="currentColor"
-              strokeLinecap="square"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M10 19H5a1 1 0 0 1-1-1v-1a3 3 0 0 1 3-3h2m10 1a3 3 0 0 1-3 3m3-3a3 3 0 0 0-3-3m3 3h1m-4 3a3 3 0 0 1-3-3m3 3v1m-3-4a3 3 0 0 1 3-3m-3 3h-1m4-3v-1m-2.121 1.879-.707-.707m5.656 5.656-.707-.707m-4.242 0-.707.707m5.656-5.656-.707.707M12 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
-            />
-          </svg>
+          <Settings className={styles.menuIcon} />
         </Link>
         <div className="flex md:block">
           <Link to="/profile" className="col-start-1 flex md:block">

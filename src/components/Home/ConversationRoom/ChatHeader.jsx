@@ -2,7 +2,7 @@ import Avatar from "../../Avatar";
 
 const ChatHeader = ({ chatUser, controls }) => {
   return (
-    <div className="flex dark:bg-slate-900">
+    <div className="flex dark:bg-slate-900 z-10">
       <button
         className="md:hidden px-3"
         onClick={controls.handleBacktoConversation}

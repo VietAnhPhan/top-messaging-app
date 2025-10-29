@@ -1,0 +1,27 @@
+@media (prefers-color-scheme: dark) {
+  .backgroundImage::after {
+    content: "";
+    background: url(/m5BEg2K4OR4.png);
+    background-size: contain;
+    opacity: 8%;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  .backgroundImage::after {
+    content: "";
+    background: url(/MHVytaGe3gh.png);
+    background-size: contain;
+    opacity: 13%;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+  }
+}

@@ -1,0 +1,60 @@
+@media (prefers-color-scheme: dark) {
+  .timeSentMessage {
+    color: rgba(255, 255, 255, 0.6);
+  }
+  .myMessage {
+    padding: 6px 7px 8px 9px;
+    background-color: rgb(20, 77, 55);
+    color: white;
+    opacity: 100;
+  }
+
+  .otherMessage {
+    padding: 6px 7px 8px 9px;
+    background-color: oklch(27.9% 0.041 260.031);
+    color: white;
+  }
+
+  .myMessageTail {
+    position: absolute;
+    top: 0;
+    right: -8px;
+    color: rgb(20, 77, 55);
+  }
+
+  .otherMessageTail {
+    position: absolute;
+    top: 0;
+    left: -8px;
+    color: oklch(27.9% 0.041 260.031);
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  .timeSentMessage {
+    color: #7C7C7C;
+  }
+  .myMessage {
+    padding: 6px 7px 8px 9px;
+    background-color: #dbf8c6;
+  }
+
+  .otherMessage {
+    padding: 6px 7px 8px 9px;
+    background-color: white;
+  }
+
+  .myMessageTail {
+    position: absolute;
+    top: 0;
+    right: -8px;
+    color: #dbf8c6;
+  }
+
+  .otherMessageTail {
+    position: absolute;
+    top: 0;
+    left: -8px;
+    color: white;
+  }
+}
