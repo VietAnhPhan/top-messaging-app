@@ -1,0 +1,33 @@
+@import "tailwindcss";
+
+@layer base {
+  input {
+    border-color: var(--color-zinc-400);
+    border-width: 1px;
+    color: black;
+  }
+}
+
+@theme {
+  --color-icon-box: #f9f9f9;
+}
+
+.container {
+  max-width: 1195px;
+  margin: 0 auto;
+}
+
+.backgroundColor {
+  background: #dad299; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #b0dab9,
+    #dad299
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #b0dab9,
+    #dad299
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  height: 100%;
+}

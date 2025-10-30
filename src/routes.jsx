@@ -20,7 +20,7 @@ const router = createBrowserRouter([
       {
         path: "/",
         loader: homeLoader,
-        element: <Home sitename="ReactJS template" />,
+        element: <Home sitename="Messaging App" />,
       },
 
       {
@@ -53,11 +53,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/login",
-    element: <Login sitename="ReactJS template" />,
+    element: <Login sitename="MessagingApp" />,
   },
   {
     path: "/sign-up",
-    element: <Signup sitename="ReactJS template" />,
+    element: <Signup sitename="Messaging App" />,
   },
 ]);
 
