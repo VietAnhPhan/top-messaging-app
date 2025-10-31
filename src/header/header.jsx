@@ -2,14 +2,17 @@ import { MessageSquareText, Users, Settings } from "lucide-react";
 import styles from "./header.module.css";
 
 import { Link } from "react-router";
+import { useContext } from "react";
+import { AvatarContext } from "../Context";
 
 export const Header = ({ loaderData }) => {
+  const avatarContext = useContext(AvatarContext);
   return (
     <header className="flex md:flex-col justify-between items-center bg-zinc-100 dark:bg-slate-800 md:py-8 px-3 border-r-[1px] border-r-zinc-300 dark:border-r-slate-700 z-10">
       <div className="flex flex-col gap-y-3">
         <Link to="/">
           <div className={styles.menuIconWrapper}>
-            <MessageSquareText className={styles.menuIcon}/>
+            <MessageSquareText className={styles.menuIcon} />
           </div>
         </Link>
         <Link to="/friends">
@@ -27,7 +30,7 @@ export const Header = ({ loaderData }) => {
               <div className="w-7 h-7">
                 <img
                   className="rounded-[50%] object-cover object-top w-full h-full"
-                  src={`https://bkudoqbqykfhbgcxfelw.supabase.co/storage/v1/object/public/${loaderData.avatarPath}`}
+                  src={`https://bkudoqbqykfhbgcxfelw.supabase.co/storage/v1/object/public/${avatarContext.avatarPath}`}
                   alt={`${loaderData.name}'s avatar`}
                 />
               </div>
