@@ -350,7 +350,7 @@ const api = {
 
   sendMessage: async (message, token) => {
     try {
-      const response = await fetch("http://localhost:3000/messages", {
+      const response = await fetch(`${serverURL}/messages`, {
         method: "POST",
         body: JSON.stringify(message),
         headers: {
@@ -372,7 +372,7 @@ const api = {
 
   updateProfile: async (authId, formData, token) => {
     try {
-      const response = await fetch(`http://localhost:3000/users/${authId}`, {
+      const response = await fetch(`${serverURL}/users/${authId}`, {
         method: "PUT",
         body: formData,
         headers: {

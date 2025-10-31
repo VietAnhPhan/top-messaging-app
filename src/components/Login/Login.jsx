@@ -1,5 +1,5 @@
 import styles from "./Login.module.css";
-import logoImage from "/logo-landscape.png";
+import logoImage from "/messaging-app-logo-500x500px.png";
 import introImage from "/intro-app.png";
 import { ErrorBoundary } from "react-error-boundary";
 import { useState } from "react";
@@ -47,8 +47,10 @@ function Login(props) {
       <div className={styles.backgroundColor}>
         <div className={styles.container}>
           <title>{`Login | ${props.sitename}`}</title>
-          <div className="flex pt-10">
-            <img src={logoImage} alt="login icon" className="w-32" />
+          <div className="flex pt-5">
+            <Link to="/">
+              <img src={logoImage} alt="login icon" className="w-32" />
+            </Link>
           </div>
           <div className="flex items-center gap-x-10 h-full justify-center">
             <div className="rounded-md xl:col-span-1 xl:col-start-3 flex-1">
