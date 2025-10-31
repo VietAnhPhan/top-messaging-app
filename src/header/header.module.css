@@ -9,9 +9,11 @@
   background-color: rgba(255, 255, 255, 0.2);
 }
 
-.menuIcon:hover {
-  fill: white;
+.activeMenuItem{
+  background-color: rgba(255, 255, 255, 0.2);
 }
+
+
 @media (prefers-color-scheme: light) {
   .menuIcon {
     color: rgba(0, 0, 0, 0.6);

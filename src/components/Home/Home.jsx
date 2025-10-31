@@ -1,9 +1,9 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useLoaderData } from "react-router";
 import ConversationList from "./ConversationList/ConversationList";
 import ContactSearchList from "./ContactList/ContactSearchList";
 import ContactInfo from "./ContactInfo/ContactInfo";
-import { ConversationContext, UserContext } from "../../Context";
+import { ConversationContext, HeaderContext, UserContext } from "../../Context";
 import ChatWindow from "./ConversationRoom/ChatWindow";
 import api from "../../api";
 
@@ -20,6 +20,12 @@ function Home(props) {
   const [isChatWindow, setIsChatWindow] = useState(false);
   const [isConversationList, setIsConversationList] = useState(true);
   const [isOpenContactInfo, setIsOpenContactInfo] = useState(true);
+
+  const headerContext = useContext(HeaderContext);
+
+  useEffect(() => {
+    headerContext.setactiveMenuItem("chats");
+  });
 
   useEffect(() => {
     if (window.innerWidth >= 768 && (!isChatWindow || !isConversationList)) {

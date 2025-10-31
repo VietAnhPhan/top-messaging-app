@@ -1,7 +1,7 @@
-import { useContext, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 
 import { useLoaderData } from "react-router";
-import { AvatarContext, SupabaseContext, UserContext } from "../../Context";
+import { AvatarContext, HeaderContext, SupabaseContext } from "../../Context";
 import api from "../../api";
 
 const Profile = () => {
@@ -23,6 +23,12 @@ const Profile = () => {
   const avatarUploadedRef = useRef(null);
 
   const avatarContext = useContext(AvatarContext);
+
+  const headerContext = useContext(HeaderContext);
+
+  useEffect(() => {
+    headerContext.setactiveMenuItem("profile");
+  });
 
   async function handleUpdate(formData) {
     const password = formData.get("password");

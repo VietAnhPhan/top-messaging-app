@@ -1,7 +1,16 @@
+import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router";
+import { HeaderContext } from "../Context";
 
 const Setting = () => {
   const navigate = useNavigate();
+
+  const headerContext = useContext(HeaderContext);
+
+  useEffect(() => {
+    headerContext.setactiveMenuItem("settings");
+  });
+
   function logout() {
     localStorage.removeItem("messaging_app_access");
     localStorage.removeItem("user");

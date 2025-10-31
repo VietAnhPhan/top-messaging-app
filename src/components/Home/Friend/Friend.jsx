@@ -2,9 +2,17 @@ import { useLoaderData } from "react-router";
 import SentFriendRequest from "./SentFriendRequest";
 import FriendList from "./FriendList";
 import ReceivingFriendRequest from "./receivingFriendRequest";
+import { useContext, useEffect } from "react";
+import { HeaderContext } from "../../../Context";
 
 const Friend = () => {
   const dataLoader = useLoaderData();
+
+  const headerContext = useContext(HeaderContext);
+
+  useEffect(() => {
+    headerContext.setactiveMenuItem("friends");
+  });
 
   return (
     <>

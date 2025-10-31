@@ -28,7 +28,7 @@ const router = createBrowserRouter([
         loader: dataLoader,
         element: (
           // <Wrapper>
-            <Profile />
+          <Profile />
           // </Wrapper>
         ),
       },
