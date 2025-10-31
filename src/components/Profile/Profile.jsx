@@ -53,7 +53,15 @@ const Profile = () => {
       setValidations([]);
     }
 
-    await api.updateProfile(UserContext.id, formData, UserContext.token);
+    const userData = {
+      username: formData.get("username"),
+      password: formData.get("password"),
+      name: formData.get("fullname"),
+      about: formData.get("about"),
+      phone: formData.get("phone"),
+    };
+
+    await api.updateProfile(loaderData.id, userData, loaderData.token);
 
     setIsupdate(false);
     setResult("You updated successfully!");
@@ -201,7 +209,7 @@ const Profile = () => {
           </label>
           <input
             type="text"
-            name="name"
+            name="fullname"
             id="fullname"
             className="p-1.5 w-full dark:text-gray-50"
             required

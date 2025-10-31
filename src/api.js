@@ -370,11 +370,11 @@ const api = {
     }
   },
 
-  updateProfile: async (authId, formData, token) => {
+  updateProfile: async (authId, userData, token) => {
     try {
       const response = await fetch(`${serverURL}/users/${authId}`, {
         method: "PUT",
-        body: formData,
+        body: JSON.stringify(userData),
         headers: {
           "Content-type": "application/json",
           Authorization: `bearer ${token}`,
