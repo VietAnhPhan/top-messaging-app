@@ -1,7 +1,8 @@
 import { useContext, useRef, useState } from "react";
 
 import { useLoaderData } from "react-router";
-import { SupabaseContext } from "../../Context";
+import { SupabaseContext, UserContext } from "../../Context";
+import api from "../../api";
 
 const Profile = () => {
   const loaderData = useLoaderData();
@@ -52,20 +53,10 @@ const Profile = () => {
       setValidations([]);
     }
 
-    const response = await fetch(
-      `http://localhost:3000/users/${loaderData.id}`,
-      {
-        method: "PUT",
-        body: formData,
-        headers: {
-          Authorization: `bearer ${loaderData.token}`,
-        },
-      }
-    );
-    if (response.ok) {
-      setIsupdate(false);
-      setResult("You updated successfully!");
-    }
+    await api.updateProfile(UserContext.id, formData, UserContext.token);
+
+    setIsupdate(false);
+    setResult("You updated successfully!");
   }
 
   function handleEdit() {
@@ -161,7 +152,7 @@ const Profile = () => {
             defaultValue={loaderData.username}
           />
         </div>
-         <div className="flex flex-col">
+        <div className="flex flex-col">
           <label htmlFor="email" className="text-zinc-500">
             Email:
           </label>

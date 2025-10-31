@@ -1,8 +1,12 @@
+const serverURL = import.meta.env.PROD
+  ? import.meta.env.VITE_SERVER_DOMAIN
+  : import.meta.env.VITE_LOCAL_HOST;
+
 const api = {
   getConversations: async (userId, token) => {
     try {
       const response = await fetch(
-        `http://localhost:3000/conversations?userId=${userId}`,
+        `${serverURL}/conversations?userId=${userId}`,
         {
           method: "GET",
           headers: {
@@ -25,7 +29,7 @@ const api = {
   getCurrentConversation: async (userIds, token) => {
     try {
       const response = await fetch(
-        `http://localhost:3000/conversations?userIds=${userIds}`,
+        `${serverURL}/conversations?userIds=${userIds}`,
         {
           method: "GET",
           headers: {
@@ -49,7 +53,7 @@ const api = {
   getSearchContact: async (search, token) => {
     try {
       const response = await fetch(
-        `http://localhost:3000/users?contact=${search}&search=true`,
+        `${serverURL}/users?contact=${search}&search=true`,
         {
           method: "GET",
           headers: { Authorization: `bearer ${token}` },
@@ -71,7 +75,7 @@ const api = {
   getChatUser: async (currentConversationId, authId, token) => {
     try {
       const response = await fetch(
-        `http://localhost:3000/users?conversation_id=${currentConversationId}&auth_id=${authId}`,
+        `${serverURL}/users?conversation_id=${currentConversationId}&auth_id=${authId}`,
         {
           method: "GET",
           headers: { Authorization: `bearer ${token}` },
@@ -92,15 +96,12 @@ const api = {
 
   getUser: async (username, token) => {
     try {
-      const response = await fetch(
-        `http://localhost:3000/users?username=${username}`,
-        {
-          method: "GET",
-          headers: {
-            Authorization: `bearer ${token}`,
-          },
-        }
-      );
+      const response = await fetch(`${serverURL}/users?username=${username}`, {
+        method: "GET",
+        headers: {
+          Authorization: `bearer ${token}`,
+        },
+      });
 
       if (!response.ok) {
         throw new Error(`Response status: ${response.status}`);
@@ -116,15 +117,12 @@ const api = {
 
   getSentRequest: async (token) => {
     try {
-      const response = await fetch(
-        "http://localhost:3000/friendrequests?sent=true",
-        {
-          method: "GET",
-          headers: {
-            Authorization: `bearer ${token}`,
-          },
-        }
-      );
+      const response = await fetch(`${serverURL}/friendrequests?sent=true`, {
+        method: "GET",
+        headers: {
+          Authorization: `bearer ${token}`,
+        },
+      });
 
       if (!response.ok) {
         throw new Error(`Response status: ${response.status}`);
@@ -138,7 +136,7 @@ const api = {
   },
 
   login: async (username, password) => {
-    const response = await fetch("http://localhost:3000/auth/login", {
+    const response = await fetch(`${serverURL}/auth/login`, {
       method: "POST",
       body: JSON.stringify({ username: username, password: password }),
       headers: {
@@ -156,7 +154,7 @@ const api = {
   },
 
   signUp: async (user) => {
-    const response = await fetch("http://localhost:3000/auth/sign-up", {
+    const response = await fetch(`${serverURL}/auth/sign-up`, {
       method: "POST",
       body: JSON.stringify(user),
       headers: {
@@ -174,7 +172,7 @@ const api = {
   },
 
   sendInvitation: async (receiverId, token) => {
-    const response = await fetch("http://localhost:3000/friendrequests", {
+    const response = await fetch(`${serverURL}/friendrequests`, {
       method: "POST",
       body: JSON.stringify({
         receiverId: receiverId,
@@ -196,7 +194,7 @@ const api = {
 
   revokeInvitation: async (id, token) => {
     const response = await fetch(
-      `http://localhost:3000/friendrequests/${id}?revoke=true`,
+      `${serverURL}/friendrequests/${id}?revoke=true`,
       {
         method: "PATCH",
 
@@ -218,7 +216,7 @@ const api = {
 
   rejectInvitation: async (id, token) => {
     const response = await fetch(
-      `http://localhost:3000/friendrequests/${id}?reject=true`,
+      `${serverURL}/friendrequests/${id}?reject=true`,
       {
         method: "PATCH",
 
@@ -241,7 +239,7 @@ const api = {
   getReceivingInvitations: async (token) => {
     try {
       const response = await fetch(
-        "http://localhost:3000/friendrequests?receiving=true",
+        `${serverURL}/friendrequests?receiving=true`,
         {
           method: "GET",
           headers: {
@@ -264,7 +262,7 @@ const api = {
   getInvitation: async (chatUserId, token) => {
     try {
       const response = await fetch(
-        `http://localhost:3000/friendrequests?chatUserId=${chatUserId}`,
+        `${serverURL}/friendrequests?chatUserId=${chatUserId}`,
         {
           method: "GET",
           headers: {
@@ -287,7 +285,7 @@ const api = {
   acceptInvitation: async (id, token) => {
     try {
       const response = await fetch(
-        `http://localhost:3000/friendrequests/${id}?accept=true`,
+        `${serverURL}/friendrequests/${id}?accept=true`,
         {
           method: "PATCH",
           headers: {
@@ -310,7 +308,7 @@ const api = {
   unfriend: async (id, chatUserId, token) => {
     try {
       const response = await fetch(
-        `http://localhost:3000/friendrequests/${id}?unfriend=true&chatUserId=${chatUserId}`,
+        `${serverURL}/friendrequests/${id}?unfriend=true&chatUserId=${chatUserId}`,
         {
           method: "PATCH",
           headers: {
@@ -330,17 +328,58 @@ const api = {
     }
   },
 
-    getFriends: async (token) => {
+  getFriends: async (token) => {
     try {
-      const response = await fetch(
-        "http://localhost:3000/friends?auth=true",
-        {
-          method: "GET",
-          headers: {
-            Authorization: `bearer ${token}`,
-          },
-        }
-      );
+      const response = await fetch(`${serverURL}/friends?auth=true`, {
+        method: "GET",
+        headers: {
+          Authorization: `bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`Response status: ${response.status}`);
+      }
+
+      const result = await response.json();
+      return result;
+    } catch (err) {
+      console.log(err);
+    }
+  },
+
+  sendMessage: async (message, token) => {
+    try {
+      const response = await fetch("http://localhost:3000/messages", {
+        method: "POST",
+        body: JSON.stringify(message),
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`Response status: ${response.status}`);
+      }
+
+      const result = await response.json();
+      return result;
+    } catch (err) {
+      console.log(err);
+    }
+  },
+
+  updateProfile: async (authId, formData, token) => {
+    try {
+      const response = await fetch(`http://localhost:3000/users/${authId}`, {
+        method: "PUT",
+        body: formData,
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `bearer ${token}`,
+        },
+      });
 
       if (!response.ok) {
         throw new Error(`Response status: ${response.status}`);

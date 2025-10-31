@@ -57,43 +57,28 @@ const ChatInput = () => {
       }
     }
 
-    try {
-      const lastMessage = {
-        message: message,
-        userId: userContext.id,
-        chatUserId: userContext.chatUser.id,
-        filePath: filePath,
-        fileType: fileType,
-      };
+    const lastMessage = {
+      message: message,
+      userId: userContext.id,
+      chatUserId: userContext.chatUser.id,
+      filePath: filePath,
+      fileType: fileType,
+    };
 
-      const rs = await fetch("http://localhost:3000/messages", {
-        method: "POST",
-        body: JSON.stringify(lastMessage),
-        headers: {
-          "Content-type": "application/json",
-          Authorization: `bearer ${userContext.token}`,
-        },
-      });
+    const sentMessage = await api.sendMessage(lastMessage, userContext.token);
 
-      if (rs.ok) {
-        const message = await rs.json();
-        console.log(message);
-        if (!currentConversation) {
-          currentConversation = await api.getCurrentConversation(
-            [userContext.id, userContext.chatUser.id],
-            userContext.token
-          );
-          updatedConversation = { ...currentConversation };
-        } else {
-          updatedConversation = { ...currentConversation };
-          updatedConversation.messages.push(message);
-        }
-
-        conversationContext.setCurrentConversation(updatedConversation);
-      }
-    } catch (error) {
-      console.log(error);
+    if (!currentConversation) {
+      currentConversation = await api.getCurrentConversation(
+        [userContext.id, userContext.chatUser.id],
+        userContext.token
+      );
+      updatedConversation = { ...currentConversation };
+    } else {
+      updatedConversation = { ...currentConversation };
+      updatedConversation.messages.push(sentMessage);
     }
+
+    conversationContext.setCurrentConversation(updatedConversation);
   }
 
   function handleUpload(e) {
