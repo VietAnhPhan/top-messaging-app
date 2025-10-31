@@ -11,7 +11,7 @@ const ChatWindow = ({ chatUser, controls }) => {
         // className="bg-[url(/MHVytaGe3gh.png)] dark:bg-[url(/m5BEg2K4OR4.png)] w-full h-full opacity-13 dark:opacity-8 absolute top-0"
         className={styles.backgroundImage}
       ></div>
-      <div className="bg-[#F5F1EB] dark:bg-slate-900 "></div>
+      {/* <div className={styles.backgroundColor}></div> */}
       <ChatBody></ChatBody>
       <ChatInput></ChatInput>
     </>

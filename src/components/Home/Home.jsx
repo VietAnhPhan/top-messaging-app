@@ -6,6 +6,7 @@ import ContactInfo from "./ContactInfo/ContactInfo";
 import { ConversationContext, HeaderContext, UserContext } from "../../Context";
 import ChatWindow from "./ConversationRoom/ChatWindow";
 import api from "../../api";
+import styles from "./ConversationRoom/ChatBody.module.css";
 
 function Home(props) {
   const loaderData = useLoaderData();
@@ -232,7 +233,7 @@ function Home(props) {
           <div
             className={`${
               isOpenContactInfo ? "col-span-1" : "col-span-2"
-            } row-span-1 flex flex-col overflow-auto dark:bg-slate-900 relative`}
+            } row-span-1 flex flex-col overflow-auto ${styles.backgroundColor} relative`}
           >
             <ChatWindow
               chatUser={chatUser}

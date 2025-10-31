@@ -10,10 +10,13 @@
     position: absolute;
     z-index: 1;
   }
+  .backgroundColor {
+    background-color: oklch(20.8% 0.042 265.755);
+  }
 }
 
 @media (prefers-color-scheme: light) {
-  .backgroundImage::after {
+  .backgroundImage {
     content: "";
     background: url(/MHVytaGe3gh.png);
     background-size: contain;
@@ -24,5 +27,8 @@
     right: 0;
     position: absolute;
     z-index: 1;
+  }
+  .backgroundColor {
+    background-color: rgb(245, 241, 235);
   }
 }

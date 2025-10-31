@@ -5,23 +5,29 @@
   box-sizing: content-box;
   border-radius: 50%;
 }
-.menuIconWrapper:hover {
-  background-color: rgba(255, 255, 255, 0.2);
-}
-
-.activeMenuItem{
-  background-color: rgba(255, 255, 255, 0.2);
-}
-
 
 @media (prefers-color-scheme: light) {
   .menuIcon {
     color: rgba(0, 0, 0, 0.6);
+  }
+  .menuIconWrapper:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+
+  .activeMenuItem {
+    background-color: rgba(0, 0, 0, 0.2);
   }
 }
 
 @media (prefers-color-scheme: dark) {
   .menuIcon {
     color: rgba(255, 255, 255, 0.6);
+  }
+  .menuIconWrapper:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+
+  .activeMenuItem {
+    background-color: rgba(255, 255, 255, 0.2);
   }
 }
