@@ -2,7 +2,6 @@ import MyMessage from "./MyMessage";
 import OthersMessage from "./OthersMessage";
 import { useContext, useEffect, useRef } from "react";
 import { ConversationContext, UserContext } from "../../../Context";
-import styles from "./ChatBody.module.css";
 
 const ChatBody = () => {
   const userContext = useContext(UserContext);
@@ -15,9 +14,9 @@ const ChatBody = () => {
 
   return (
     <div
-      className={`bg-[#F5F1EB] dark:bg-slate-900 relative overflow-auto flex-1 ${styles.backgroundImage}`}
+      className={`relative overflow-auto flex-1 z-10`}
     >
-      <div className="px-13 pt-4 pb-20" ref={chatMessagesRef}>
+      <div className={`px-13 pt-4 pb-20`} ref={chatMessagesRef}>
         {conversation.currentConversation &&
           conversation.currentConversation.messages.length > 0 &&
           conversation.currentConversation.messages.map((message) => {
@@ -32,10 +31,6 @@ const ChatBody = () => {
               );
           })}
       </div>
-      {/* <div
-        className="bg-[url(/MHVytaGe3gh.png)] dark:bg-[url(/m5BEg2K4OR4.png)] w-full h-full opacity-13 dark:opacity-8 absolute top-0"
-        ref={backgroundRef}
-      ></div> */}
     </div>
   );
 };

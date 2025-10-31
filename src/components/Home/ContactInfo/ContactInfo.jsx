@@ -87,7 +87,7 @@ const ContactInfo = ({ currentContact }) => {
         <div className="flex flex-col items-center">
           <Avatar user={currentContact} type={"infoFrame"}></Avatar>
 
-          <p className="dark:text-gray-50">
+          <p className="dark:text-gray-50 pt-8">
             {currentContact ? currentContact.name : ""}
           </p>
           <p className="dark:text-gray-50">

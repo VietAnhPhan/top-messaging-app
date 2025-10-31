@@ -1,6 +1,5 @@
 @media (prefers-color-scheme: dark) {
-  .backgroundImage::after {
-    content: "";
+  .backgroundImage {
     background: url(/m5BEg2K4OR4.png);
     background-size: contain;
     opacity: 8%;
@@ -9,6 +8,7 @@
     bottom: 0;
     right: 0;
     position: absolute;
+    z-index: 1;
   }
 }
 
@@ -23,5 +23,6 @@
     bottom: 0;
     right: 0;
     position: absolute;
+    z-index: 1;
   }
 }
