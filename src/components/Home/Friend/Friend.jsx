@@ -17,14 +17,16 @@ const Friend = (props) => {
   return (
     <>
       <title>{`Friends | ${props.sitename}`}</title>
-      <div className="flex flex-col gap-y-7">
-        <SentFriendRequest
-          sentRequests={dataLoader.sentRequests}
-        ></SentFriendRequest>
-        <ReceivingFriendRequest
-          receivingRequests={dataLoader.receivingRequests}
-        ></ReceivingFriendRequest>
-        <FriendList friends={dataLoader.friendList}></FriendList>
+      <div className="grid md:grid-cols-[30%_45%_25%]">
+        <div className="flex flex-col gap-y-7">
+          <SentFriendRequest
+            sentRequests={dataLoader.sentRequests}
+          ></SentFriendRequest>
+          <ReceivingFriendRequest
+            receivingRequests={dataLoader.receivingRequests}
+          ></ReceivingFriendRequest>
+          <FriendList friends={dataLoader.friendList}></FriendList>
+        </div>
       </div>
     </>
   );
