@@ -6,8 +6,6 @@ import {
 } from "../../../Context";
 import api from "../../../api";
 
-import styles from "./ChatInput.module.css";
-
 const ChatInput = () => {
   const userContext = useContext(UserContext);
   const conversationContext = useContext(ConversationContext);
@@ -65,13 +63,13 @@ const ChatInput = () => {
       fileType: fileType,
     };
 
-    const sentMessage = await api.sendMessage(lastMessage, userContext.token);
+    const sentMessage = await api.sendMessage(lastMessage);
 
     if (!currentConversation) {
-      currentConversation = await api.getCurrentConversation(
-        [userContext.id, userContext.chatUser.id],
-        userContext.token
-      );
+      currentConversation = await api.getCurrentConversation([
+        userContext.id,
+        userContext.chatUser.id,
+      ]);
       updatedConversation = { ...currentConversation };
     } else {
       updatedConversation = { ...currentConversation };

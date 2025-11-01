@@ -19,10 +19,7 @@ const ContactInfo = ({ currentContact }) => {
   useEffect(() => {
     async function fetchInvitations() {
       if (active) {
-        const invitation = await api.getInvitation(
-          currentContact.id,
-          userContext.token
-        );
+        const invitation = await api.getInvitation(currentContact.id);
 
         if (invitation && invitation.status === "pending") {
           setrequestStatus("pending");
@@ -51,32 +48,29 @@ const ContactInfo = ({ currentContact }) => {
   }, [currentContact.id]);
 
   async function handleSent() {
-    await api.sendInvitation(currentContact.id, userContext.token);
-    const invitation = await api.getInvitation(
-      currentContact.id,
-      userContext.token
-    );
+    await api.sendInvitation(currentContact.id);
+    const invitation = await api.getInvitation(currentContact.id);
     setrequestStatus("pending");
     setFriendRequest(invitation);
   }
 
   async function handleRevoke() {
-    await api.revokeInvitation(friendRequest.id, userContext.token);
+    await api.revokeInvitation(friendRequest.id);
     setrequestStatus("");
   }
 
   async function handleAccept() {
-    await api.acceptInvitation(friendRequest.id, userContext.token);
+    await api.acceptInvitation(friendRequest.id);
     setrequestStatus("accepted");
   }
 
   async function handleReject() {
-    await api.rejectInvitation(friendRequest.id, userContext.token);
+    await api.rejectInvitation(friendRequest.id);
     setrequestStatus("");
   }
 
   async function handleUnfriend() {
-    await api.unfriend(friendRequest.id, currentContact.id, userContext.token);
+    await api.unfriend(friendRequest.id, currentContact.id);
     setrequestStatus("");
   }
 

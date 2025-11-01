@@ -6,10 +6,10 @@ const ContactSearchList = ({ contacts }) => {
   const userContext = useContext(UserContext);
 
   async function handleSelect(contact) {
-    const currentConversation = await api.getCurrentConversation(
-      [userContext.id, contact.id],
-      userContext.token
-    );
+    const currentConversation = await api.getCurrentConversation([
+      userContext.id,
+      contact.id,
+    ]);
 
     userContext.handleSelectUser(contact, currentConversation);
 

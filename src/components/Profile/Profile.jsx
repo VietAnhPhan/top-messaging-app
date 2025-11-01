@@ -71,7 +71,7 @@ const Profile = () => {
       avatarPath: formData.get("avatarPath"),
     };
 
-    await api.updateProfile(loaderData.id, userData, loaderData.token);
+    await api.updateProfile(loaderData.id, userData);
 
     setIsupdate(false);
     setResult("You updated successfully!");

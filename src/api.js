@@ -2,8 +2,10 @@ const serverURL = import.meta.env.PROD
   ? import.meta.env.VITE_SERVER_DOMAIN
   : import.meta.env.VITE_LOCAL_HOST;
 
+const token = JSON.parse(localStorage.getItem("messaging_app_access")).token;
+
 const api = {
-  getConversations: async (userId, token) => {
+  getConversations: async (userId) => {
     try {
       const response = await fetch(
         `${serverURL}/conversations?userId=${userId}`,
@@ -26,7 +28,7 @@ const api = {
     }
   },
 
-  getCurrentConversation: async (userIds, token) => {
+  getCurrentConversation: async (userIds) => {
     try {
       const response = await fetch(
         `${serverURL}/conversations?userIds=${userIds}`,
@@ -50,7 +52,7 @@ const api = {
     }
   },
 
-  getSearchContact: async (search, token) => {
+  getSearchContact: async (search) => {
     try {
       const response = await fetch(
         `${serverURL}/users?contact=${search}&search=true`,
@@ -72,7 +74,7 @@ const api = {
     }
   },
 
-  getChatUser: async (currentConversationId, authId, token) => {
+  getChatUser: async (currentConversationId, authId) => {
     try {
       const response = await fetch(
         `${serverURL}/users?conversation_id=${currentConversationId}&auth_id=${authId}`,
@@ -94,7 +96,7 @@ const api = {
     }
   },
 
-  getUser: async (username, token) => {
+  getUser: async (username) => {
     try {
       const response = await fetch(`${serverURL}/users?username=${username}`, {
         method: "GET",
@@ -115,7 +117,7 @@ const api = {
     }
   },
 
-  getSentRequest: async (token) => {
+  getSentRequest: async () => {
     try {
       const response = await fetch(`${serverURL}/friendrequests?sent=true`, {
         method: "GET",
@@ -171,7 +173,7 @@ const api = {
     return result;
   },
 
-  sendInvitation: async (receiverId, token) => {
+  sendInvitation: async (receiverId) => {
     const response = await fetch(`${serverURL}/friendrequests`, {
       method: "POST",
       body: JSON.stringify({
@@ -192,7 +194,7 @@ const api = {
     return result;
   },
 
-  revokeInvitation: async (id, token) => {
+  revokeInvitation: async (id) => {
     const response = await fetch(
       `${serverURL}/friendrequests/${id}?revoke=true`,
       {
@@ -214,7 +216,7 @@ const api = {
     return result;
   },
 
-  rejectInvitation: async (id, token) => {
+  rejectInvitation: async (id) => {
     const response = await fetch(
       `${serverURL}/friendrequests/${id}?reject=true`,
       {
@@ -236,7 +238,7 @@ const api = {
     return result;
   },
 
-  getReceivingInvitations: async (token) => {
+  getReceivingInvitations: async () => {
     try {
       const response = await fetch(
         `${serverURL}/friendrequests?receiving=true`,
@@ -259,7 +261,7 @@ const api = {
     }
   },
 
-  getInvitation: async (chatUserId, token) => {
+  getInvitation: async (chatUserId) => {
     try {
       const response = await fetch(
         `${serverURL}/friendrequests?chatUserId=${chatUserId}`,
@@ -282,7 +284,7 @@ const api = {
     }
   },
 
-  acceptInvitation: async (id, token) => {
+  acceptInvitation: async (id) => {
     try {
       const response = await fetch(
         `${serverURL}/friendrequests/${id}?accept=true`,
@@ -305,7 +307,7 @@ const api = {
     }
   },
 
-  unfriend: async (id, chatUserId, token) => {
+  unfriend: async (id, chatUserId) => {
     try {
       const response = await fetch(
         `${serverURL}/friendrequests/${id}?unfriend=true&chatUserId=${chatUserId}`,
@@ -328,7 +330,7 @@ const api = {
     }
   },
 
-  getFriends: async (token) => {
+  getFriends: async () => {
     try {
       const response = await fetch(`${serverURL}/friends?auth=true`, {
         method: "GET",
@@ -348,7 +350,7 @@ const api = {
     }
   },
 
-  sendMessage: async (message, token) => {
+  sendMessage: async (message) => {
     try {
       const response = await fetch(`${serverURL}/messages`, {
         method: "POST",
@@ -370,7 +372,7 @@ const api = {
     }
   },
 
-  updateProfile: async (authId, userData, token) => {
+  updateProfile: async (authId, userData) => {
     try {
       const response = await fetch(`${serverURL}/users/${authId}`, {
         method: "PUT",

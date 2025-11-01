@@ -66,7 +66,7 @@ async function authMiddleware({ context }) {
 
   if (!access) throw redirect("/login");
 
-  const user = await api.getUser(access.username, access.token);
+  const user = await api.getUser(access.username);
 
   if (!user) throw redirect("/login");
 
@@ -81,19 +81,17 @@ function dataLoader({ context }) {
 
 async function homeLoader({ context }) {
   const user = context.get(UserContext);
-  const conversations = await api.getConversations(user.id, user.token);
+  const conversations = await api.getConversations(user.id);
   let chatUser = null;
   let currentConversation = null;
 
   if (conversations.length > 0) {
     currentConversation = await api.getCurrentConversation(
-      conversations[0].userIds,
-      user.token
+      conversations[0].userIds
     );
     chatUser = await api.getChatUser(
       currentConversation.id,
-      user.id,
-      user.token
+      user.id
     );
   }
 
@@ -111,11 +109,10 @@ async function homeLoader({ context }) {
   return data;
 }
 
-async function friendsLoader({ context }) {
-  const user = context.get(UserContext);
-  const sentRequests = await api.getSentRequest(user.token);
-  const friendList = await api.getFriends(user.token);
-  const receivingRequests = await api.getReceivingInvitations(user.token);
+async function friendsLoader() {
+  const sentRequests = await api.getSentRequest();
+  const friendList = await api.getFriends();
+  const receivingRequests = await api.getReceivingInvitations();
 
   const friends = {
     sentRequests,

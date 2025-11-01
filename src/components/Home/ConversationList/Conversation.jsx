@@ -20,10 +20,7 @@ const Conversation = ({ conversation, userIds }) => {
     lastTime.getFullYear();
 
   async function handleSelect() {
-    const currentConversation = await api.getCurrentConversation(
-      userIds,
-      userContext.token
-    );
+    const currentConversation = await api.getCurrentConversation(userIds);
 
     userContext.handleSelectUser(chatUser, currentConversation);
 

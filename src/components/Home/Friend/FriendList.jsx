@@ -1,7 +1,16 @@
+import api from "../../../api";
 import styles from "../../../Button.module.css";
 import Avatar from "../../Avatar";
 
 const FriendList = ({ friends }) => {
+  async function unfriend(friendId) {
+    const invitation = await api.getInvitation(friendId);
+    console.log(invitation);
+    if (invitation && invitation.status === "accepted") {
+      await api.unfriend(invitation.id, friendId);
+    }
+  }
+
   return (
     <>
       <p className="dark:text-gray-50 mt-3">Friends</p>
@@ -14,7 +23,12 @@ const FriendList = ({ friends }) => {
                 <span>{friend.name}</span>
               </div>
 
-              <button className={styles.rejectButton}>Unfriend</button>
+              <button
+                className={styles.rejectButton}
+                onClick={() => unfriend(friend.id)}
+              >
+                Unfriend
+              </button>
             </li>
           ))}
         </ul>

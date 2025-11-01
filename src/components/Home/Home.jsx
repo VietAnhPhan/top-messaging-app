@@ -57,8 +57,7 @@ function Home(props) {
     }
 
     const contacts = await api.getSearchContact(
-      e.target.value,
-      loaderData.user.token
+      e.target.value
     );
     setContacts(contacts);
   }

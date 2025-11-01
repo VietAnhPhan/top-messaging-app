@@ -1,7 +1,12 @@
+import api from "../../../api";
 import styles from "../../../Button.module.css";
 import Avatar from "../../Avatar";
 
 const SentFriendRequest = ({ sentRequests }) => {
+  async function handleRevoke(id) {
+    await api.revokeInvitation(id);
+  }
+
   return (
     <>
       <p className="dark:text-gray-50">Sent requests</p>
@@ -17,7 +22,12 @@ const SentFriendRequest = ({ sentRequests }) => {
                 <span className="flex-1">{sentRequest.receiver.name}</span>
               </div>
 
-              <button className={styles.rejectButton}>Revoke request</button>
+              <button
+                className={styles.rejectButton}
+                onClick={() => handleRevoke(sentRequest.id)}
+              >
+                Revoke request
+              </button>
             </li>
           ))}
         </ul>
