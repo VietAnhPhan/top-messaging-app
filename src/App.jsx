@@ -23,11 +23,10 @@ function App() {
         <HeaderContext value={{ activeMenuItem, setactiveMenuItem }}>
           <div className="flex flex-col-reverse md:flex-row h-full dark:bg-slate-900">
             <Header loaderData={loaderData}></Header>
-            <div className="grid md:grid-cols-[30%_45%_25%] h-full flex-1 overflow-auto">
-              <SupabaseContext value={supabase}>
-                <Outlet></Outlet>
-              </SupabaseContext>
-            </div>
+
+            <SupabaseContext value={supabase}>
+              <Outlet></Outlet>
+            </SupabaseContext>
           </div>
         </HeaderContext>
       </AvatarContext>

@@ -1,6 +1,7 @@
 import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { HeaderContext } from "../Context";
+import { Settings } from "lucide-react";
 
 const Setting = (props) => {
   const navigate = useNavigate();
@@ -18,9 +19,9 @@ const Setting = (props) => {
   }
   return (
     <>
-    <title>{`Settings | ${props.sitename}`}</title>
-      <div className="md:grid md:grid-cols-3 flex-1 overflow-y-auto">
-        <div className="flex flex-col gap-y-4">
+      <title>{`Settings | ${props.sitename}`}</title>
+      <div className="md:grid md:grid-cols-3 flex-1 overflow-y-auto h-full">
+        <div className="flex col-span-1 flex-col gap-y-4">
           <p className="dark:text-gray-50 text-2xl">Settings</p>
           <ul>
             <li>
@@ -49,6 +50,10 @@ const Setting = (props) => {
               </button>
             </li>
           </ul>
+        </div>
+        <div className="col-span-2 text-4xl flex flex-col items-center justify-center dark:text-white gap-y-10">
+          <Settings size={70} />
+          <h1>Settings</h1>
         </div>
       </div>
     </>

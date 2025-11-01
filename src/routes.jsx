@@ -85,23 +85,10 @@ async function homeLoader({ context }) {
   const user = context.get(UserContext);
   const conversations = await api.getConversations(user.id);
   let chatUser = null;
-  let currentConversation = null;
-
-  if (conversations.length > 0) {
-    currentConversation = await api.getCurrentConversation(
-      conversations[0].userIds
-    );
-    chatUser = await api.getChatUser(currentConversation.id, user.id);
-  }
-
-  // user.conversations = conversations;
-  // user.currentConversation = currentConversation;
-  // user.chatUser = chatUser;
 
   const data = {
     user,
     conversations,
-    currentConversation,
     chatUser,
   };
 

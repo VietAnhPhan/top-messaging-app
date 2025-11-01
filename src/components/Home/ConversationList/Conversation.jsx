@@ -1,16 +1,15 @@
 import { useContext } from "react";
 import { UserContext } from "../../../Context";
-import api from "../../../api";
 import Avatar from "../../Avatar";
 import styles from "./Conversation.module.css";
 
-const Conversation = ({ conversation, userIds }) => {
+const Conversation = ({ conversation }) => {
   const userContext = useContext(UserContext);
-  const chatUser = conversation.ChatMember[0].user;
-  const isSeen = conversation.messages[0].isSeen;
-  const chatUserId = conversation.messages[0].userId;
+  const chatUser = getChatUser(conversation.ChatMember, userContext.id);
+  const isSeen = getLastMessage(conversation).isSeen;
+  const chatUserId = getLastMessage(conversation).userId;
 
-  const lastTime = new Date(conversation.messages[0].createdAt);
+  const lastTime = new Date(getLastMessage(conversation).createdAt);
   const lastTimeFortmat =
     lastTime.getMonth() +
     1 +
@@ -20,9 +19,7 @@ const Conversation = ({ conversation, userIds }) => {
     lastTime.getFullYear();
 
   async function handleSelect() {
-    const currentConversation = await api.getCurrentConversation(userIds);
-
-    userContext.handleSelectUser(chatUser, currentConversation);
+    userContext.handleSelectUser(chatUser, conversation);
 
     if (
       !userContext.screen.isChatWindow ||
@@ -59,7 +56,7 @@ const Conversation = ({ conversation, userIds }) => {
                 !isSeen && chatUser.id === chatUserId && styles.incomingMessage
               }`}
             >
-              {conversation.messages[0].message}
+              {conversation.messages[conversation.messages.length - 1].message}
             </p>
           </div>
         </div>
@@ -86,3 +83,15 @@ const Conversation = ({ conversation, userIds }) => {
 };
 
 export default Conversation;
+
+function getChatUser(chatMembers, authId) {
+  const chatMember = chatMembers.filter((chatMember) => {
+    return chatMember.user.id !== authId;
+  });
+
+  return chatMember[0].user;
+}
+
+function getLastMessage(conversation) {
+  return conversation.messages[conversation.messages.length - 1];
+}
