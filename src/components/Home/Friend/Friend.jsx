@@ -5,7 +5,7 @@ import ReceivingFriendRequest from "./receivingFriendRequest";
 import { useContext, useEffect } from "react";
 import { HeaderContext } from "../../../Context";
 
-const Friend = () => {
+const Friend = (props) => {
   const dataLoader = useLoaderData();
 
   const headerContext = useContext(HeaderContext);
@@ -16,6 +16,7 @@ const Friend = () => {
 
   return (
     <>
+      <title>{`Friends | ${props.sitename}`}</title>
       <div className="flex flex-col gap-y-7">
         <SentFriendRequest
           sentRequests={dataLoader.sentRequests}

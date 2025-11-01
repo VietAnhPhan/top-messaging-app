@@ -10,6 +10,8 @@ import Friend from "./components/Home/Friend/Friend";
 import Wrapper from "./components/Wrapper";
 import api from "./api";
 
+const sitename = "Messaging App";
+
 const router = createBrowserRouter([
   {
     path: "",
@@ -20,7 +22,7 @@ const router = createBrowserRouter([
       {
         path: "/",
         loader: homeLoader,
-        element: <Home sitename="Messaging App" />,
+        element: <Home sitename={sitename} />,
       },
 
       {
@@ -28,7 +30,7 @@ const router = createBrowserRouter([
         loader: dataLoader,
         element: (
           // <Wrapper>
-          <Profile />
+          <Profile sitename={sitename} />
           // </Wrapper>
         ),
       },
@@ -36,7 +38,7 @@ const router = createBrowserRouter([
         path: "/settings",
         element: (
           <Wrapper>
-            <Setting></Setting>
+            <Setting sitename={sitename} />
           </Wrapper>
         ),
       },
@@ -45,7 +47,7 @@ const router = createBrowserRouter([
         loader: friendsLoader,
         element: (
           <Wrapper>
-            <Friend></Friend>
+            <Friend sitename={sitename} />
           </Wrapper>
         ),
       },
@@ -53,11 +55,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/login",
-    element: <Login sitename="MessagingApp" />,
+    element: <Login sitename={sitename} />,
   },
   {
     path: "/sign-up",
-    element: <Signup sitename="Messaging App" />,
+    element: <Signup sitename={sitename} />,
   },
 ]);
 
@@ -89,10 +91,7 @@ async function homeLoader({ context }) {
     currentConversation = await api.getCurrentConversation(
       conversations[0].userIds
     );
-    chatUser = await api.getChatUser(
-      currentConversation.id,
-      user.id
-    );
+    chatUser = await api.getChatUser(currentConversation.id, user.id);
   }
 
   // user.conversations = conversations;

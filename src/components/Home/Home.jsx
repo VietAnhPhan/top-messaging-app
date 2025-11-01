@@ -89,7 +89,7 @@ function Home(props) {
       <ConversationContext
         value={{ currentConversation, setCurrentConversation }}
       >
-        <title>{`Homepage | ${props.sitename}`}</title>
+        <title>{`Conversations | ${props.sitename}`}</title>
         {/* Column 1*/}
         {isConversationList && (
           <div className="md:col-span-1 md:flex flex-col border-r-[1px] border-r-zinc-300 dark:border-r-slate-700 dark:bg-slate-900 z-10">
